@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>permute</title>
+</head>
+<body>
+<script type="text/javascript">
+    const res = []
+    function permute (nums) {
+        // 全排列 使用回溯算法 使用used来标记
+        const track = []
+        backtrace(nums, track)
+        return res
+    }
+
+    function backtrace (nums, track) {
+        if(track.length === nums.length){
+            res.push(Array.from(track))
+        }
+        for (let i = 0; i < nums.length; i++) {
+            // 排除不合法的选择
+            if(track.includes(nums[i])) continue
+            track.push(nums[i])
+            backtrace(nums, track)
+            track.pop()
+        }
+    }
+    console.log(permute([0,1]))
+</script>
+</body>
+</html>

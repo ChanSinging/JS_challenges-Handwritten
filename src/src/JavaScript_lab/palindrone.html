@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>palindrome</title>
+</head>
+<body>
+<script type="text/javascript">
+    function longestPalindrome (s) {
+        var res = '';
+        for (let i = 0; i < s.length; i++) {
+            var s1 = helper(s, i, i);
+            var s2 = helper(s, i, i + 1);
+            // res = longest(res,s1,s2) 比较长度  res分别和s1 s2比较
+            res = (res.length>s1.length) ? res:s1
+            res = (res.length>s2.length) ? res:s2
+        }
+        return res;
+    }
+
+    function helper (s, l, r) {
+        while (l >= 0 && r < s.length && s[l] === s[r]) {
+            l--;
+            r++;
+        }
+        console.log(s.slice(l + 1, r));
+        return s.slice(l + 1, r);
+    }
+
+    var s = "babad";
+    console.log(longestPalindrome(s))
+</script>
+</body>
+</html>

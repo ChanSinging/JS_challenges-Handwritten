@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>isSameTree</title>
+</head>
+<body>
+<script type="text/javascript">
+    function TreeNode (val) {
+        this.val = val;
+        this.left = this.right = null;
+    }
+
+    // function isSameTree()
+    // 树的题在LeetCode上写
+    function levelOrder (root) {
+        // 层序遍历树  先记住解题套路
+        const res = []
+        if (root === null) return null
+        const queue = []  // 遍历的队列
+        queue.push(root)
+        while (queue.length !== 0) {
+            const sz = queue.length
+            res.push([])
+            for (let i = 1; i <= sz; i++) {  // 一个for代表一层
+                const node = queue.shift()  // q.shift is first node   3 9 20 15 7
+                res[res.length - 1].push(node.val)  // 放在当前res的最后以为
+                if (node.left) queue.push(node.left)
+                if (node.right) queue.push(node.right)
+            }
+        }
+        return res
+    }
+
+    const nums = [2,3,5,71,1]
+    nums[nums.length-1].push(0.11)
+    console.log(nums)
+</script>
+</body>
+</html>

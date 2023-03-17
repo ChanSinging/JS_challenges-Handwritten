@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    var findMode = function (root) {
+        // 遍历所有节点计算众数，但是考虑是二叉搜索数的数值分布有规律的
+        const res = []
+        travse(root, res)
+        const temp = []
+        for (let item in res) {
+            if (item === null) continue
+            temp.push(item)
+        }
+        console.log(temp)
+        if (temp.length <= 2) return temp
+        // 找到数组的众数
+        let obj = {}
+        // 使用map结构
+        for (let item in res) {
+            if (obj[res[item]] == undefined) { //第一次出现的值，计数为1
+                obj[res[item]] = 1
+            } else {
+                obj[res[item]]++
+            }
+        }
+        let maxCount = 0
+        for (let item in obj) {
+            maxCount = item > maxCount ? item : maxCount
+        }
+        let res1 = []
+        res1.push(maxCount)
+        return res1
+    };
+
+    function travse (root, res) {
+        if (root === null) return;
+        travse(root.left, res);
+        res.push(root.val);
+        travse(root.right, res);
+    }
+
+    let root = [1, null, 2]
+    // console.log(findMaxCount(root))
+
+    function findMaxCount () {
+        // 使用寻找数组的众数
+        let obj = {}
+        for (let item in res) {
+            if (obj[res[item]] == undefined) { //第一次出现的值，计数为1
+                obj[res[item]] = 1
+            } else {
+                obj[res[item]]++
+            }
+        }
+        let maxCount = 0
+        for (let item in obj) {
+            maxCount = item > maxCount ? item : maxCount
+        }
+    }
+    let num = 2
+    console.log([num])  // [] 转成数组
+
+    var findMode = function(root) {
+        // 1.中序遍历当前值和上一个值比较是否相同。相同则加1，不相同count就是1表示当前是一个新元素
+        //没比较一次就要看是否更新最大值
+        //如果count>max就更新最大值，清空结果数组，添加新的数据到结果数组
+        //如果count= max就说明当前出新次数和之前出现的次数一样多，直接添加新数据到结果数组
+        let prenode = null;
+        let count = 1;
+        let max = 1; let res = [];
+        const helper = (root) => {
+            if(!root) return;
+            helper(root.left);
+            if(prenode) {
+                if(root.val==prenode.val) count++;
+                else count=1;
+            }
+            if(count > max){
+                max = count;
+                res = [];
+                res.push(root.val);
+            }else if(count == max) res.push(root.val);
+            prenode = root;
+            helper(root.right);
+        }
+        helper(root);
+        return res;
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>threeSum</title>
+</head>
+<body>
+<script type="text/javascript">
+    function threeSum (nums) {
+        // 查找三个数的和为0的数组
+        // 双指针+排序
+        nums.sort()
+        return digui(nums, 0, 3, 0)
+    }
+
+    function digui (nums, left, nSum, target) {
+        let res = []
+        let size = nums.length
+        // 两数的值等于0
+        if(nSum<2 || nums.length<nSum) return res
+        if (nSum === 2) {
+            let li = left, hi = size - 1
+            while (li < hi) {
+                let sum = nums[li] + nums[hi]
+                let left = nums[li], right = nums[hi]
+                if ( sum < target) {
+                    li++ // 左指针前进并去重
+                } else if (sum > target) {
+                    hi-- // 右指针后退并去重
+                } else {
+                    res.push([left, right])
+                    while (li < hi && nums[li] === left) li++;
+                    while (li < hi && nums[hi] === right) hi--;
+                }
+                console.log(li + '-' + hi)
+
+            }
+        } else {  // 三个数之和
+            for (let i = left; i < size; i++) {
+                let ans = digui(nums, i+1, nSum-1, target-nums[i])
+                console.log('ans: '+ans)
+            }
+        }
+    }
+
+    var threeSum2 = function(nums) {
+        const res = [], len = nums.length
+        // 将数组排序
+        nums.sort((a, b) => a - b)
+        for (let i = 0; i < len; i++) {
+            let l = i + 1, r = len - 1, iNum = nums[i]
+            // 数组排过序，如果第一个数大于0直接返回res
+            if (iNum > 0) return res
+            // 去重
+            if (iNum === nums[i - 1]) continue
+            while(l < r) {
+                let lNum = nums[l], rNum = nums[r], threeSum = iNum + lNum + rNum
+                // 三数之和小于0，则左指针向右移动
+                if (threeSum < 0) l++
+                else if (threeSum > 0) r--
+                else {
+                    res.push([iNum, lNum, rNum])
+                    // 去重
+                    while(l < r && nums[l] === nums[l + 1]){
+                        l++
+                    }
+                    while(l < r && nums[r] === nums[r - 1]) {
+                        r--
+                    }
+                    l++
+                    r--
+                }
+            }
+        }
+        return res
+    }
+
+    let nums = [-1, 0, 1, 2, -1, -4]
+    console.log(threeSum(nums))
+</script>
+</body>
+</html>

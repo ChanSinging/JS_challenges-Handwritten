@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>searchRange</title>
+</head>
+<body>
+<script type="text/javascript">
+    function searchRange (nums, target) {
+        var findNum = new Array(2).fill(0)
+        findNum[0] = findLeft(nums, target)
+        findNum[1] = findRight(nums, target)
+        return findNum
+    }
+
+    function findLeft (nums, target) {
+        // 使用二分来求解，而且得返回左边界和右边界
+        let left = 0, right = nums.length - 1
+        // 返回左边界， 相等时right逐步逼近
+        while (left <= right) {
+            let mid = Math.floor(left + (right - left) / 2)
+            if (nums[mid] < target) {
+                left = mid + 1
+            } else if (nums[mid] > target) {
+                right = mid - 1
+            } else {
+                right = mid - 1  // 收缩右边界
+            }
+        }
+        // 检查left 和right是否越界
+        if (left < 0 || nums[left] != target)
+            return -1
+        return left
+    }
+
+    function findRight (nums, target) {
+        // 使用二分来求解，而且得返回左边界和右边界  他在left=4时，
+        let left = 0, right = nums.length - 1
+        // 返回左边界， 相等时right逐步逼近
+        while (left <= right) {   // <= 使得找到右边缘的数后（默认+1），再次进入while 在right = mid-1
+            let mid = Math.floor(left + (right - left) / 2)
+            if (nums[mid] < target) {
+                left = mid + 1
+            } else if (nums[mid] > target) {
+                right = mid - 1
+            } else if (nums[mid] == target) {
+                left = mid + 1  // 收缩边界
+            }
+        }
+        // 检查left 和right是否越界
+        if (right < 0 || nums[right] != target)
+            return -1
+        return right
+    }
+
+    var nums = [5, 7, 7, 8, 8, 10]
+    var target = 8
+    console.log(searchRange(nums, target))
+</script>
+</body>
+</html>

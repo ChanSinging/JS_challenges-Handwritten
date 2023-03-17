@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<div id="list">
+    <p>hello</p>
+    <span>world</span>
+    <em>cookieParse()</em>
+</div>
+<script type="text/javascript">
+    let all = document.querySelector("p")
+    console.log(all);
+    let parent = document.getElementById('list')
+    let child = list.firstChild
+    console.log(list.lastChild)
+    while(child !== list.lastChild){
+        if(child.nodeType === 1){
+            console.log(child)
+        }
+        child = child.nextSibling
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>twoOutOfThree</title>
+</head>
+<body>
+<script type="text/javascript">
+    function twoOutOfThree (nums1, nums2, nums3) {
+        // js 返回元素各不相等的数组，至少在两个数组中出现的所有值
+        // 找重复的数，在找至少出现两次的所有值
+        const res = []
+        let set1 = new Set(nums1)
+        let set2 = new Set(nums2)
+        let set3 = new Set(nums3)
+        nums1 = [...set1]
+        nums2 = [...set2]
+        nums3 = [...set3] // 数据去重
+        // 找三个数组的公共元素
+        for (let i = 0; i < nums1.length; i++) {
+            for (let j = 0; j < nums2.length; j++) {
+                for (let k = 0; k < nums3.length; k++) {
+                    // 找三个数组的公共元素
+                    // if (nums1.includes(nums2[j]) && nums1.includes(nums3[k])) res.add(nums2[j])
+                    // // 找两个数组共有的
+                    // if (nums1.includes(nums2[j]) && nums1.includes(nums3[k])) res.add(nums2[j])
+                    // if (nums2.includes(nums1[i]) && nums2.includes(nums3[k])) res.add(nums1[i])
+                    // if (nums3.includes(nums1[i]) && nums3.includes(nums2[j])) res.add(nums1[i])
+                    // no need includes
+                    if (nums1[i] === nums2[j] || nums1[i] === nums3[k]) res.push(nums1[i])
+                    if (nums2[j] === nums3[k]) res.push(nums2[j])
+                }
+            }
+        }
+        return [...new Set(res)]
+    }
+
+    let nums1 = [3,1],
+        nums2 = [2,3],
+        nums3 = [1,2]
+    console.log(twoOutOfThree(nums1, nums2, nums3))
+</script>
+</body>
+</html>

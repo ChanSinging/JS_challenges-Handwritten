@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>盒子div</title>
+</head>
+<body>
+<h2 class="my-div">盒子模型演示</h2>
+
+<p class="my-test-p">CSS盒模型本质上是一个盒子，封装周围的HTML元素，它包括：边距，边框，填充，和实际内容。</p>
+
+<div>这里是盒子内的实际内容。有 25px 内间距，25px 外间距、25px 绿色边框。</div>
+</body>
+<style>
+    div {
+        background-color: lightgrey;
+        width: 300px;
+        border: 25px solid green;
+        padding: 25px;
+        margin: 25px;
+    }
+
+    p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    p.my-test-p{
+        margin: 100px 50px 100px 50px;
+        color: red;
+        position: static;
+        display: block;
+    }
+    .my-div {
+        display: inline;
+        opacity: 100%;
+        position: static;
+    }
+</style>
+</html>

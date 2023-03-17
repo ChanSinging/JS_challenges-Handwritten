@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json2download</title>
+</head>
+<body>
+<script type="text/javascript">
+    function download () {
+        const a = document.createElement("a")
+        a.download = name
+        a.rel = "noopener"
+        a.href = url
+        a.dispatchEvent(new MouseEvent("click"))
+    }
+
+    const json = {
+        a: 3,
+        b: 4,
+        c: 5
+    }
+    const str = JSON.stringify(json, null, 2)
+
+    // 方案一 Text --DataURL
+    const dataurl = `data:,${str}$`
+    // download(dataurl, "demo.json")
+
+    const xhr = new XMLHttpRequest(),
+        method = "GET",
+        url = "https://developer.mozilla.org/";
+    xhr.open(method, url, true);
+
+    xhr.send();
+
+    // 取消发送请求
+    xhr.abort();
+</script>
+</body>
+</html>

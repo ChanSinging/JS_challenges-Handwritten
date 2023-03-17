@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>表格</title>
+</head>
+<body>
+<header>table list</header>
+
+<table>
+    <tr>
+        <th>姓名</th>
+        <th>sex</th>
+        <th>telephone</th>
+    </tr>
+    <tr>
+        <th>xiao_wang</th>
+        <th>male</th>
+        <th>1231312</th>
+    </tr>
+</table>
+<ul>
+    <li>hangzhou</li>
+    <li>xiamen</li>
+    <li>putian</li>
+</ul>
+<audio src='' controls autoplay loop='true'></audio>
+<canvas id="myCanvas" width="200" height="100"></canvas>
+
+<table class="table-2">
+    <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+    </tr>
+    <tr>
+        <td>Peter</td>
+        <td>Griffin</td>
+    </tr>
+    <tr>
+        <td>Lois</td>
+        <td>Griffin</td>
+    </tr>
+</table>
+</body>
+<style>
+    table,th,td
+    {
+        border:1px solid black;
+    }
+    th
+    {
+        height: 2px;
+        background-color: #FF0000;
+        color: red;
+        /*display: inline;*/
+    }
+    .table-2::before{
+        content:"伪元素的使用";
+        color: blue;
+        font-size: 6px;
+        transform: scale(1, 0.5);
+    }
+</style>
+</html>

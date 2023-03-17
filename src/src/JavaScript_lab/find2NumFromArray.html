@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>从有序数组中找出和为某值的两个数</title>
+</head>
+<body>
+<script type="text/javascript">
+    function findSum (arr, sum) { // 0.338134765625ms
+        // 利用快排+二分法
+        let low = 0, high = arr.length - 1
+        let temp = arr[low] + arr[high]
+        let nums = new Array(2).fill(-1)
+        console.log(temp)
+        while (low < high && temp != sum) {  // low high不一定遍历到底，需要
+            while (low < high && temp < sum) {
+                temp = arr[++low] + arr[high]
+            }
+            while (low < high && temp > sum) {
+                temp = arr[low] + arr[--high]
+            }
+        }
+        if (temp == sum) {
+            nums[0] = arr[low]
+            nums[1] = arr[high]
+        } else {
+            nums.fill(0)
+        }
+        return nums
+    }
+
+    function find2Sum (arr, target) {  // 1.073974609375ms
+        let left = 0, right = arr.length - 1
+        while (left < right) {
+            let sum = arr[left] + arr[right]
+            if (sum < target) left++
+            if (sum > target) right--
+            if(sum===target) return [arr[left], arr[right]]
+        }
+        return []
+    }
+
+    // 三数之和
+    var threeSum = function(nums) {
+        const res = [], len = nums.length
+        // 将数组排序
+        nums.sort((a, b) => a - b)
+        for (let i = 0; i < len; i++) {
+            let l = i + 1, r = len - 1, iNum = nums[i]
+            // 数组排过序，如果第一个数大于0直接返回res
+            if (iNum > 0) return res
+            // 去重
+            if (iNum === nums[i - 1]) continue
+            while(l < r) {
+                let lNum = nums[l], rNum = nums[r], threeSum = iNum + lNum + rNum
+                // 三数之和小于0，则左指针向右移动
+                if (threeSum < 0) l++
+                else if (threeSum > 0) r--
+                else {
+                    res.push([iNum, lNum, rNum])
+                    // 去重
+                    while(l < r && nums[l] === nums[l + 1]){
+                        l++
+                    }
+                    while(l < r && nums[r] === nums[r - 1]) {
+                        r--
+                    }
+                    l++
+                    r--
+                }
+            }
+        }
+        return res
+    }
+
+
+    console.time('global')
+    let sum = 9
+    let arr = [1, 5, 8, 10, 12]
+    console.log(find2Sum(arr, sum))
+    console.timeEnd('global')
+
+</script>
+</body>
+</html>

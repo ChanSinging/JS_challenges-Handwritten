@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>懒加载</title>
+</head>
+<body>
+<div id="father">
+    <div id="son">
+        <div id="sonOfSon"><span>剧中测试代码，使用flex方法</span></div></div>
+</div>
+
+
+<img
+        src="../picture/001.png"
+        alt="1"
+/>
+<img
+        src="../picture/001.png"
+        alt="2"
+/>
+<img
+        data-src="../picture/001.png"
+        alt="3"
+/>
+<img
+        data-src="../picture/001.png"
+        alt="4"
+/>
+<img
+        data-src="../picture/002.png"
+        alt="5"
+/>
+<img
+        data-src="../picture/003.png"
+        alt="6"
+/>
+<img
+        data-src="../picture/004.png"
+        alt="7"
+/>
+<script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.20/lodash.js"></script>
+<script>
+    const images = document.querySelectorAll("img");
+    const lazyLoad = () => {
+        images.forEach((item) => {
+            // 触发条件为img元素的CSSOM对象到视口顶部的距离 < 100px + 视口高度，+100px为了提前触发图片加载
+            if (
+                item.getBoundingClientRect().top <
+                document.documentElement.clientHeight + 100
+            ) {
+                if ("src" in item.dataset) {
+                    item.src = item.dataset.src;
+                }
+            }
+        });
+    };
+    document.addEventListener("scroll", _.throttle(lazyLoad, 200));  // 反抖
+</script>
+</body>
+
+<style>
+    img {
+        width: 50%;
+        height: 600px;
+    }
+
+    #father {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(119, 65, 65, 0.7);
+        height: 50vh; /*长度表示 rem px vh 百分比*/
+    }
+
+    #son {
+        width: 80%;
+        height: 60%;
+        background: white;
+        border-radius: 30px;
+    }
+    #sonOfSon {
+        width: 80%;
+        height: 60%;
+        background: #170c0c;
+        border-radius: 30px;
+    }
+</style>
+</html>

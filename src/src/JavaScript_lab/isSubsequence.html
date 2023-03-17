@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>isSubsequence</title>
+</head>
+<body>
+<script type="text/javascript">
+    // 判断是否是子序列
+    function isSubsequence (s, t) {
+        // 使用双指针,
+        // 具体的策略是 s是短字符串
+        let i = 0,
+            j = 0
+        while (i < s.length && j < t.length) {
+            if (s[i] === t[j]) {
+                i++;  //短字符串+1
+            }
+            j++;
+        }
+        return i === s.length
+    }
+
+    let str = "abc"
+    let str2 = "ahbgdc"
+    console.log(isSubsequence(str, str2))
+
+    //
+    let a = [1]
+    console.log(a.toString())
+
+    "use strict"
+
+    function foo () {
+        console.log(this.a);
+    }
+
+    var a = 2;
+    (function () {
+        foo();
+    })();
+</script>
+</body>
+</html>

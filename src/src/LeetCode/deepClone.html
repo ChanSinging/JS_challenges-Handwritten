@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>deepClone</title>
+</head>
+<body>
+<script type="text/javascript">
+    // stringify是简单写法，无法应对复杂的情况
+    // 比如对象里含有Date、RegExp、Error对象
+    const oldobj = { a: 1 }
+    const newobj = JSON.parse(JSON.stringify(oldobj));
+    newobj.a = 2
+    console.log(newobj)
+    console.log(oldobj)
+
+    // 黄金段位 正确理解引用类型概念的能力；精确判断数据类型的能力。
+    function deepClone (target) {
+        if (target !== null && typeof target === 'object') {
+            let result = Object.prototype.toString.call(target) === "[object Array]" ? [] : {};
+            for (let k in target) {
+                if (target.hasOwnProperty(k)) {
+                    result[k] = deepClone(target[k])
+                }
+            }
+            return result;
+        } else {
+            return target;
+        }
+    }
+
+    function deepColone3 (target) {
+        if (target !== null && typeof target !== 'object') {
+            let result = Object.prototype.toString.call(target) === "[Object Array]" ? [] : {};
+            for (let k in target) {
+                if (target.hasOwnProperty(k))
+                    result[k] = deepColone3(target)
+            }
+            return result
+        } else {
+            return target
+        }
+    }
+
+</script>
+</body>
+</html>

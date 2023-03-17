@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>twoSumLessThanK</title>
+</head>
+<body>
+<script type="text/javascript">
+    function twoSumLessThanK (nums, k) {
+        nums.sort((a, b) => a - b)
+        const n = nums.length
+        let sum = 0
+        let left = 0, right = n - 1
+        // use two point to deal with
+        while (left < right) {
+            let temp = nums[left] + nums[right]
+            if (nums[left] + nums[right] <= k) {
+                sum = Math.max(sum, nums[left] + nums[right])
+                left++
+            }
+            if (temp > k) right--
+        }
+        return sum
+    }
+
+    let map = {{key='key1',value='1'}, {key='key2',value='1'}, {key='key3',value='1'}}
+    let nums = [34, 23, 1, 24, 75, 33, 54, 8]
+    k = 60
+    console.log(twoSumLessThanK(nums, k))
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>maxArea</title>
+</head>
+<body>
+<script type="text/javascript">
+    function maxArea (nums) {
+        // 使用双指针解决问题  find min area
+        const n = nums.length
+        let left = 0, right = n - 1
+        let res = 0
+        while (left < right) {
+            let temp = Math.min(nums[left], nums[right]) * (right - left)
+            res = Math.max(temp, res)
+            if (nums[left] > nums[right]) {  //指针往数小的方向缩
+                right--
+            } else {
+                left++
+            }
+        }
+        return res
+    }
+
+    //动态规划
+    function maxArea2 (nums) {  // 0.156005859375ms大概
+        const n = nums.length
+        let res = 0
+        for (let i = 0; i < n; i++) {
+            for (let j = 0; j < n; j++)
+                res = Math.max(res, Math.min(nums[i], nums[j]) * (j - i))
+        }
+        return res
+    }
+
+    console.time('global')
+    console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]))
+    console.timeEnd('global')
+
+
+    console.log('下一题')
+    // 删除重复的数
+    function deleteNum (nums) {
+        let left = 0, right = 1
+        const n = nums.length
+        while (right < n) {
+            if(nums[left] !== nums[right]){ //有重复的数
+                left++
+                nums[left] = nums[right]
+            }
+            right++
+        }
+
+        return left+1
+    }
+    console.log(deleteNum([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]))
+</script>
+</body>
+</html>

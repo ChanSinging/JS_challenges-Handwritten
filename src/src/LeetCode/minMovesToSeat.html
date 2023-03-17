@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>minMovesToSeat</title>
+</head>
+<body>
+<script type="text/javascript">
+    function minMovesToSeat (seat, student) {
+        // 使用回溯解决问题，算了
+        let minCount = 0
+        let numCount = []
+        seat.sort((a,b)=>a-b)
+        student.sort((a,b)=>a-b)
+        // seat.sort()
+        // student.sort()
+        console.log(seat)
+        console.log(student);
+        for (let i = 0; i < seat.length; i++) {
+            minCount += Math.abs(seat[i] - student[i])
+        }
+        return minCount
+    }
+
+    let seat = [3,20,17,2,12,15,17,4,15,20]
+        , students = [10,13,14,15,5,2,3,14,3,18]
+    console.log(minMovesToSeat(seat, students))
+</script>
+</body>
+</html>

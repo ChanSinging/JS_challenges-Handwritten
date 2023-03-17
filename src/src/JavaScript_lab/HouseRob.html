@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HouseRob</title>
+</head>
+<body>
+<script type="text/javascript">
+    // rob = function (nums) {
+    //     var memo = new Array(nums.length + 2).fill(-1)
+    //     return dp(nums, 0)  // 从第0家开始抢劫
+    // }
+    // dp = function (nums, start) {
+    //     if(start>nums.length) return 0;
+    //     let res = Math.max(dp(nums, start+1),   // 去下家
+    //                         dp(nums,start+2)+nums[start])  // 抢，去下下家
+    //
+    //     return res
+    // }
+    // 不是使用递归
+    rob = function (nums) {
+        let n = nums.length;
+        var dp = new Array(n + 2).fill(0);
+        for (let i = n - 1; i >= 0; i--) {  // 虽然是从大往小走 但是也是
+            dp[i] = Math.max(dp[i + 1],  //
+                dp[i + 2] + nums[i]);
+            console.log(dp[i]);
+
+        }
+        return dp[0];
+    }
+
+    robII = function (nums) {  //所有的房子都围成一圈
+        let n = nums.length;
+        if (n === 1) return nums[0];
+        if (n === 0) return 0
+        var dp = new Array(n + 2).fill(0);
+        var dp2 = new Array(n + 2).fill(0);
+        for (let i = n - 1; i >= 1; i--) {  // 虽然是从大往小走
+            dp[i] = Math.max(dp[i + 1],  //
+                dp[i + 2] + nums[i]);
+        }
+        for (let i = n - 2; i >= 0; i--) {  // 虽然是从大往小走
+            dp2[i] = Math.max(dp2[i + 1],  //
+                dp2[i + 2] + nums[i]);
+        }
+        return Math.max(dp[1], dp2[0]);
+    }
+
+    function TreeNode (val, left, right) {
+        this.val = (val === undefined ? 0 : val)
+        this.left = (left === undefined ? null : left)
+        this.right = (right === undefined ? null : right)
+    }
+
+    // 房子是呈现出一个树的形状，最直接的解法是二叉树的遍历
+    function robIII (TreeNode ) {
+        int[] res = dp(root)
+    }
+
+    var nums = [2, 7, 9, 3, 1];
+    var nums2 = [1, 2, 1, 1];
+    var node = [3,2,3,null,3,null,1];
+
+
+    console.log(robII(nums2))
+</script>
+</body>
+</html>

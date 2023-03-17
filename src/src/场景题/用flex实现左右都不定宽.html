@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用flex实现左右都不定宽</title>
+</head>
+<body>
+<h2>盒子模型演示</h2>
+<div class="container">
+    <div class="left"></div>
+    <div class="right"></div>
+</div>
+<style>
+    .container{
+        display: flex;
+        flex-direction: row;
+        background-color: #170c0c;
+    }
+    .left{
+        flex: 1;
+        background-color: #aa0000;
+    }
+    .right{
+        flex: 1;
+        background-color: #42b983;
+    }
+</style>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>运载能力</title>
+</head>
+<body>
+<script type="text/javascript">
+    function shipWithinDays (goods, day) {
+        let left = 0, right = 1
+        goods.map((item) => right += item)  // 只返回数组的最后一个值，即数组和
+        // left = goods.forEach((item) => left = item > left ? item : left)
+        // let left = Math.max(...weights), right = weights.reduce((a, b) => a + b); 求数组和
+
+        left = Math.max(...goods)  // 货物的最大值
+        // right is 货物的总数
+        while (left < right) {
+            let mid = Math.floor(left + (right - left) / 2)
+            if (findMin(goods, mid) <= day) {   // 找小于5的
+                right = mid
+            } else {
+                left = mid + 1
+            }
+        }
+        return right
+    }
+
+    function findMin (goods, target) {
+        // 计算在target货物/天下，需要 days天数
+        // 尽量的放东西
+        let day = 0
+        for (let i = 0; i < goods.length;){
+            let cap = target
+            console.log(cap)
+            while (i<goods.length) {  // 循环五次  这个方法很好 记住
+                if (cap<goods[i]) break;
+                else cap = cap - goods[i]
+                i++
+                console.log(i)
+            }
+            day++
+            console.log('=====')
+        }
+        return day
+    }
+
+    let goods = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    let target = 5
+    console.log(shipWithinDays(goods, target))
+</script>
+</body>
+</html>

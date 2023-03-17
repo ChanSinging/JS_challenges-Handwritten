@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>吃香蕉</title>
+</head>
+<body>
+<script type="text/javascript">
+    // 二分查找有 自变量x 单调函数fx 目标值target
+    // 使用宽边界来是做二分法
+    function minEatingSpeed (pile, target) {
+        let left = 0
+        let right = 0
+        for (const item of pile) {
+            right = Math.max(right, item);
+        }
+        console.log(right)
+        while (left < right) {
+            let mid = left + (right - left)
+            if (getMinTime(pile, mid) > target) {
+                left = mid + 1
+            } else if (getMinTime(pile, mid) <= target){
+               right = mid
+            }
+        }
+        return left
+    }
+
+    function getMinTime (pile, target) {  // target是每小时吃x个
+        let hours = 0
+        for (let i=0;i<pile.length;i++){
+            hours += pile[i] / target
+            if (pile[i] % target >0){
+                hours++
+            }
+        }
+        return hours
+    }
+
+    var minEatingSpeed2 = function(piles, h) {
+        let low = 1;
+        let high = 0;
+        for (const pile of piles) {
+            high = Math.max(high, pile);
+        }
+        console.log(high)
+        let k = high;
+        while (low < high) {
+            const speed = Math.floor((high - low) / 2) + low;
+            const time = getTime(piles, speed);
+            if (time <= h) {
+                k = speed;
+                high = speed;
+            } else {
+                low = speed + 1;
+            }
+        }
+        return k;
+    }
+
+    const getTime = (piles, speed) => {
+        let time = 0;
+        for (const pile of piles) {
+            const curTime = Math.floor((pile + speed - 1) / speed);
+            time += curTime;
+        }
+        return time;
+    };
+
+    var pile = [3, 6, 7, 11]
+    var h = 8
+    console.log(minEatingSpeed(pile, h))
+</script>
+</body>
+</html>

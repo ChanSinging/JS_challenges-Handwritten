@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>找重复的第一个数</title>
+</head>
+<body>
+<script type="text/javascript">
+    // 找第一个第一个重复的数
+    function find_dup (nums) {  // global: 0.1640625 ms
+        let count = new Array(nums.length).fill(0)
+        let res = []
+        for (let i = 0; i < nums.length; i++) {
+            count[nums[i]]++
+        }
+        for (let i = 0; i < count.length; i++) {
+            if (count[i] > 1) {
+                res.push(i)
+            }
+        }
+        return res[0]
+    }
+
+    function find_dup3(nums){  // global: 0.15185546875 ms
+        // 交换数字的
+        let i = 0;
+        let len = nums.length;
+        while(i<len){
+            if(nums[i] == i){
+                i++;
+                continue;
+            }
+            if(nums[i]=== nums[nums[i]]) return nums[i];
+            let tmp = nums[i];
+            nums[nums[i]] = nums[i];
+            nums[i] = tmp ;
+        }
+        return 0
+    }
+    function find_dup2 (nums) {  // global: 0.1279296875 ms
+        //使用双指针, 找到第一个重复的数
+        const len = nums.length
+        let slow = 0, fast = 1
+        let res = []
+        while (fast < len) {
+            if(nums[slow]!==nums[fast]){
+                fast++
+                continue
+            }
+            res.push(nums[slow])
+            slow++
+        }
+        return res[0]
+    }
+    // 对数组排序
+    console.time('global')
+    let nums = [2, 3, 1, 0, 2, 5, 3]  // 数组里的数值在0~~n-1之间
+    console.log(find_dup2(nums))
+    console.timeEnd('global')
+
+    console.log(typeof null)  // object
+    console.log(typeof undefined)  // undefined
+</script>
+</body>
+</html>

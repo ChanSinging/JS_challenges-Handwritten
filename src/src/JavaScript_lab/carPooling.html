@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>carPooling</title>
+</head>
+<body>
+<script type="text/javascript">
+    function carPooling (nums, n) {
+        let res = new Array(1001).fill(0)
+        let diff = new Array(1001).fill(0)
+        for (let num of nums) {
+            let val = num[0]
+            let l = num[1]
+            let r = num[2]
+            diff[l] += val
+            diff[r] -= val
+        }// res 是差分函数生成的数组
+        res[0] = diff[0]
+        for (let i = 1; i < diff.length; i++) {
+            res[i] = res[i - 1] + diff[i]
+        }
+        console.log(res)
+        for (let i = 0; i < res.length; i++) {
+            if(res[i]>n) return false
+
+        }
+        return true
+    }
+
+    function carPooling2(trips, capacity){
+        let diff = Array.from({ length: 1001 }, () => 0)
+        let result = Array.from({ length: 1001 }, () => 0)
+        for (let i = 0; i < trips.length; i++) {
+            let [val, start, end] = trips[i]
+            diff[start] += val
+            diff[end] -= val
+        }
+        console.log(diff); // 0, 2, 0, 0, 0, 1, 0, -3, 0,
+        result[0] = diff[0]
+        for (let i = 1; i < diff.length; i++) {
+            result[i] = result[i - 1] + diff[i]
+        }
+        console.log(result);
+        return result.every(val => val <= capacity)
+    }
+
+    let nums = [[2,1,5],[3,5,7]]
+    let target = 3
+    // console.log(carPooling(nums, target))
+    let str = "{}{}{"
+    console.log(str[0])
+
+</script>
+</body>
+</html>

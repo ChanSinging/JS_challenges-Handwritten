@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多列布局</title>
+</head>
+<body>
+<div class="layout">
+    <header>
+        <div class="banner">
+            <a style="display: flex; justify-content: center; align-items: center" href="">
+                <img style="width: 10%;justify-content: center" src="../picture/004.png" alt="">
+            </a>
+        </div>
+    </header>
+    <div class="main">
+        <div class="item">
+            <div class="pub"></div>
+            <div class="sub">
+                <a href="javascript:;">海外酒店</a>
+                <a href="javascript:;">团购</a>
+                <a href="javascript:;">特惠酒店</a>
+                <a href="javascript:;">客栈公寓</a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="pub"></div>
+            <div class="sub">
+                <a href="javascript:;">海外酒店11</a>
+                <a href="javascript:;">团购22</a>
+                <a href="javascript:;">特惠22酒店</a>
+                <a href="javascript:;">客栈22公寓</a>
+            </div>
+        </div>
+        <section class="extra">
+            <a style="display: flex; justify-content: center; align-items: center" href="javascript:;">
+                <img style="width: 50%" src="../picture/001.png">
+            </a>
+            <a style="display: flex; justify-content: center; align-items: center" href="javascript:;">
+                <img style="width: 50%;" src="../picture/002.png">
+            </a>
+            <a style="display: flex; justify-content: center; align-items: center" href="javascript:;">
+                <img style="width: 50%" src="../picture/002.png">
+            </a>
+        </section>
+    </div>
+    <footer>
+        <nav>
+            <a href="javascript:;">电话预订</a>
+            <a href="javascript:;">下载客户端</a>
+            <a href="javascript:;">我的</a>
+        </nav>
+        <!-- 版本信息 -->
+        <div class="copyright">
+            <!-- 网站链接 -->
+            <p class="link">
+                <a href="javascript:;">网站地图</a> |
+                <a href="javascript:;">ENGLISH</a> |
+                <a href="javascript:;">电脑版</a>
+            </p>
+            <p>©2015 携程旅行</p>
+        </div>
+    </footer>
+</div>
+</body>
+<script type="text/javascript">
+    let nodes = document.all;
+    console.log(nodes)
+    console.log(nodes.length)
+
+    for(let i=0;i<nodes.length;i++){
+        var o = nodes[i];
+        // alert(o.tagName + ',' + o.nodeType + ',' + o.sourceIndex);
+    }
+    // console.log(o)
+</script>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    .layout{
+        min-width: 320px;
+    }
+    header{
+
+    }
+    .banner{
+        display: flex;
+    }
+    .banner > a{
+        flex: 2;
+    }
+    .banner > a >  img{
+        width:100%;
+        height:auto;
+        display: block;
+    }
+
+    footer{
+        width:100%;
+    }
+    footer > nav{
+        display: flex;
+    }
+    footer > nav > a{
+        flex: 1;
+        text-align: center;
+        text-decoration: none;
+        color: #666;
+        font-size: 12px;
+        line-height:40px;
+        border-top:1px solid #ccc;
+        border-bottom:1px solid #ccc;
+    }
+    .copyright > p {
+        padding-top:10px;
+        text-align: center;
+        font-size: 12px;
+    }
+    .copyright > p > a{
+        padding:0 5px;
+        text-decoration: none;
+        color: #666;
+    }
+
+    .main{
+        padding:5px;
+    }
+    .main > .item{
+        margin-top: 5px;
+        display: flex;
+        height:90px;
+        border-radius: 5px;
+    }
+    .main > .item:nth-child(1){  /* nth-child */
+        background-color: rgba(161, 166, 22, 0.7);
+    }
+    .main > .item > .pub{
+        flex: 1;
+        border-top:1px solid #fff;
+    }
+    .main > .item > .sub{
+        flex: 2;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .main > .item > .sub > a{
+        width:50%;
+        height: 45px;
+        text-align: center;
+        line-height:45px;
+        color: white;
+        text-decoration: none;
+        font-size: 13px;
+        border-left:1px solid #fff;
+        border-top:1px solid #fff;
+        box-sizing: border-box;
+    }
+    .main .extra{
+        display: flex;
+    }
+    .main .extra > a{
+        flex: 1;
+    }
+    .main .extra > a > img{
+        width:100%;
+    }
+</style>
+</html>

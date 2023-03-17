@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ComposeFunc</title>
+</head>
+<body>
+<script type="text/javascript">
+    //ES6引入了Promise，Promise可以指定一个sequence，来规定一个执行then的过程，then函数会等到执行完成后，再执行下一个then的处理。启动sequence可以使用
+    const compose = function(...args) {
+        let init = args.pop()
+        return function(...arg) {
+            return args.reverse().reduce(function(sequence, func) {
+                return sequence.then(function(result) {
+                    return func.call(null, result)
+                })
+            }, Promise.resolve(init.apply(null, arg)))
+        }
+    }
+    let init = (...args) => args.reduce((ele1, ele2) => ele1 + ele2, 0)
+    // var step1 = (...args) => 1
+    let step2 = (val) => val + 2
+    let step3 = (val) => val + 3
+    let step4 = (val) => val + 4
+
+    steps = [step4, step3, step2, init]
+
+    let composeFunc = compose(...steps)
+    // let composeFunc = compose(step4, step3, step2, init)
+
+    composeFunc(1, 2, 3).then(data => console.log(data))
+    console.log('=================')
+
+
+    const obj = { a: [1, 2], b() { console.log('可链反应访问方法')} };
+    console.log(obj?.b?.()+ '可链反应')
+</script>
+</body>
+</html>

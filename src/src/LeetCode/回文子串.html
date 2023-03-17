@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回文子串</title>
+</head>
+<body>
+<script type="text/javascript">
+    strParlionm = function (str) {
+        var res = str.replace(/[^a-zA-Z0-9]/g,"").replace(/\s/g,"").toLowerCase();  //先替换掉所有非字母和数字,
+        var temp = [...res].reverse().join("")
+        // return s===[...s].reverse().join("")   [...res]将res转化成数组
+
+        return temp === res;
+    }
+    var str = "A man, a plan, a canal: Panama"
+    console.log(strParlionm(str))
+</script>
+</body>
+</html>

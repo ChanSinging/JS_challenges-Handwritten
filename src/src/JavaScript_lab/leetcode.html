@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    var canPartition = function (nums) {
+        // var temp=0;
+        // for(var res in nums)
+        //     temp += res;
+        // var sum = temp/2;
+        const sum = (nums.reduce((p, v) => p + v));
+        if (sum % 2 != 0) return false;
+        var n = nums.length;
+        const dp = new Array(new Array(n+1),new Array(sum+1))
+        // base case
+        for (let i = 0; i < dp.length; i++) {
+            dp[i][0] = True;
+        }
+        for (var i = 1; i <= n; i++) {
+            for (let j = 1; j <= sum; j++) {
+                if (j - nums[i - 1] < 0) {
+                    //放不下了,背包空间不足
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    //背包空间充足
+                    dp[i][j] = dp[i - 1][j - nums[i - 1]] || dp[i - 1][j];
+                }
+            }
+        }
+        return dp[n][sum];
+    };
+    var nums = [1, 5, 11, 5];
+    const sum = nums.reduce((p, v) => p+v);
+    const dp = Array(sum / 2 + 1).fill(0)
+    console.log(dp);
+    // console.log(canPartition(nums));
+    let s1=2;
+    let s2=1;
+    let res=0;
+    res = Math.max(res,s1,s2)
+    console.log(res + 'res max operation')
+</script>
+</body>
+</html>

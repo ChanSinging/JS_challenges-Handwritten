@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>findAnagrams</title>
+</head>
+<body>
+<script type="text/javascript">
+    function findAnagrams (str, t) {
+        // 找到子串的所有排序
+        const n = str.length
+        let left = 0, right = 0
+        let res = new Array(0)
+        // 建立索引
+        while (left < right) {
+
+            // 收缩
+            while (right - left < t.length) {
+
+            }
+        }
+        return res
+    }
+
+    function findAnagrams2 (str, t) {
+        // 找到子串的所有排序.leetcode官方使用count技术字母出现的
+        const nLen = str.length, tLen = t.length
+        const nCount = new Array(26).fill(-1)
+        const tCount = new Array(26).fill(-1)
+        console.log(str[0].charCodeAt())
+        let res = []
+        for (let i = 0; i < tLen; i++) {
+            ++nCount[str[i].charCodeAt() - 'a'.charCodeAt()]
+            ++tCount[t[i].charCodeAt() - 'a'.charCodeAt()];
+        }
+
+        // 建立索引
+        for (let i = 0; i < nLen - tLen; ++i) {
+            //
+            --nCount[str[i].charCodeAt() - 'a'.charCodeAt()]
+            ++tCount[t[i + tLen].charCodeAt() - 'a'.charCodeAt()]
+
+            if (nCount.toString() === tCount.toString()) {
+                res.push(i + 1)
+            }
+        }
+        return res
+    }
+
+    var findAnagrams3 = function (s, p) {
+        const sLen = s.length, pLen = p.length;
+
+        if (sLen < pLen) {
+            return [];
+        }
+
+        const ans = [];
+        const sCount = new Array(26).fill(0);
+        const pCount = new Array(26).fill(0);
+        for (let i = 0; i < pLen; ++i) {
+            ++sCount[s[i].charCodeAt() - 'a'.charCodeAt()];
+            ++pCount[p[i].charCodeAt() - 'a'.charCodeAt()];
+        }
+        console.log(sCount+'-'+pCount)
+
+        if (sCount.toString() === pCount.toString()) {
+            ans.push(0);
+        }
+
+        for (let i = 0; i < sLen - pLen; ++i) {
+            --sCount[s[i].charCodeAt() - 'a'.charCodeAt()];
+            ++sCount[s[i + pLen].charCodeAt() - 'a'.charCodeAt()];
+            console.log(sCount + '--' + pCount)
+
+
+            if (sCount.toString() === pCount.toString()) {
+                ans.push(i + 1);
+            }
+        }
+
+        return ans;
+    };
+
+    let str = "cbaebabacd"
+    let t = "abc"
+    console.log(findAnagrams2(str, t))
+</script>
+</body>
+</html>

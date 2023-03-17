@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计数质数</title>
+</head>
+<body>
+<script type="text/javascript">
+    function countPrime (nums) {
+        let isPrime = new Array(nums).fill(true)
+        console.log(isPrime)
+        for (let i = 2; i < nums; i++) {
+            if (isPrime[i]) {
+                for (let j = 2 * i; j < nums; j = j + i) {
+                    isPrime[j] = false
+                }
+            }
+        }
+        var count = 0
+        for (let i=2;i<nums;i++){
+            if(isPrime[i]) {
+                console.log(i)
+                count++
+            }
+        }
+        return count
+    }
+    // 优化后的方法 外部的for 最大的遍历数到sqrt(nums)，内部的for从i*i开始遍历
+    // 因为 外部的 由于因⼦的对称性，其中的 for 循环只需要遍历[2,sqrt(n)] 就够了
+    function countPrime2 (nums) {
+        let isPrime = new Array(nums).fill(true)
+        console.log(isPrime)
+        for (let i = 2; i*i < nums; i++) {
+            if (isPrime[i]) {
+                for (let j = i * i; j < nums; j = j + i) {
+                    isPrime[j] = false
+                }
+            }
+        }
+        var count = 0
+        for (let i=2;i<nums;i++){
+            if(isPrime[i]) {
+                console.log(i)
+                count++
+            }
+        }
+        return count
+    }
+    console.time('global')
+    var res = 10
+    console.log(countPrime(res))
+    console.timeEnd('global')
+</script>
+</body>
+</html>

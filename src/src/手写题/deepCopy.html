@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>deepCopy</title>
+</head>
+<body>
+<script type="text/javascript">
+    // let a = {
+    //     age: 1
+    // }
+    // let b = a
+    // a.age = 2
+    // console.log(b.age) // 2
+    let a = {
+        age: 1, c () {
+        },
+    }
+    let b = Object.assign({}, a)  // a!=b
+    // let b = {...a}  es6 最新
+    a.age = 2
+    console.log(b.age)
+
+    // 青铜段位
+    let obj = JSON.parse(JSON.stringify(a))
+
+    // 白银对位
+    function deepClone (target) {
+        if (target !== null || typeof target === 'Object') {
+            let result = ''
+            for (let a in target) {
+                if(target.hasOwnProperty(a))
+                    result[a] = deepClone(target[a])
+            }
+            return result
+        }
+        return target
+    }
+
+    let flag:boolean = true;
+    console.log(flag)
+</script>
+</body>
+</html>

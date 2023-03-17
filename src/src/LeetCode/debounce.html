@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>debounce</title>
+</head>
+<body>
+<script type="text/javascript">
+     function debounce (fn, wait) {
+        let timer;
+        return function () {
+            let _this = this;
+            console.log(arguments)
+            let args = arguments;
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function () {
+                fn.apply(_this, args);
+            }, wait);
+        };
+    }
+
+    function debounce2(fn, delay = 1000) {
+        // 实现防抖函数的核心是使用setTimeout
+        // time变量用于保存setTimeout返回的Id
+
+        let time = null
+
+        // 将回调接收的参数保存到args数组中
+        function _debounce(...args) {
+            // 如果time不为0，也就是说有定时器存在，将该定时器清除
+            if (time !== null) {
+                clearTimeout(time)
+            }
+
+            time = setTimeout(() => {
+                // 使用apply改变fn的this，同时将参数传递给fn
+                fn.apply(this, args)
+            }, delay)
+        }
+
+        // 防抖函数会返回另一个函数，该函数才是真正被调用的函数
+        return _debounce
+    }
+
+    function throttle (f,wait) {
+        let timer;
+        return (...args) => {
+            if (timer) {
+                return;
+            }
+            timer = setTimeout(() => {
+                f(...args);
+                timer = null;
+            }, wait);
+        };
+    }
+    // 使用定时器实现节流
+     function throttle2 () {
+
+     }
+     function getCanvasFp() {
+         const canvas = document.getElementById("canvas");
+         console.log(canvas)
+         const ctx = canvas.getContext("2d");
+         ctx.font = "14px Arial";
+         ctx.fillStyle = "#ccc";
+         ctx.fillText("hello, shanyue", 2, 2);
+         return canvas.toDataURL("image/jpeg");
+     }
+    getCanvasFp()
+
+    // window.onresize = debounce(function () {
+    //     console.log("resize");
+    // }, 500);
+</script>
+</body>
+</html>

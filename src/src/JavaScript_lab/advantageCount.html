@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>advantageCount</title>
+</head>
+<body>
+<script type="text/javascript">
+    function advantageCount (nums1, nums2) {  // nums1 = [2, 7, 11, 15], nums2 = [1, 10, 4, 11]
+        // 优势洗牌，使得nums1相比于nums2的每个索引下的数值都要大
+        // 使用田忌赛马的策略，数组双指针  田忌赛马
+        let idx1 = [], idx2 = new Array(nums2.length).fill(0)
+        for (let i = 0; i < nums2.length; i++) {  //
+            idx1[i] = i;
+            idx2[i] = i;
+        }
+        // 将index保存为数值的升序，方便后续用到双指针
+        idx1.sort((i, j) => nums1[i] - nums1[j]) // 0,1,2,3 升序
+        idx2.sort((i, j) => nums2[i] - nums2[j]) // 0, 2, 1, 3 升序
+
+        const res = new Array(nums1.length).fill(0)
+        let left = 0, right = nums1.length - 1
+        for (let i = 0; i < nums1.length; i++) {  // 每次比较都是nums1 和nums2最小的数
+            if (nums1[idx1[i]] > nums2[idx2[left]]) {  // 如nums1 [i]值大于nums2 [left]
+                res[idx2[left]] = nums1[idx1[i]]  // 选用idx1[i]的，放置在
+                ++left
+            } else {
+                res[idx2[right]] = nums1[idx1[i]]  // 如nums1 [i]值小于nums2 [i]
+                --right
+            }
+        }
+        return res
+    }
+
+    function office(nums1,nums2){
+        const n = nums1.length;
+        const idx1 = new Array(n).fill(0);
+        const idx2 = new Array(n).fill(0);
+        for (let i = 0; i < n; ++i) {
+            idx1[i] = i;
+            idx2[i] = i;
+        }
+        idx1.sort((i, j) => nums1[i] - nums1[j]);
+        idx2.sort((i, j) => nums2[i] - nums2[j]);
+
+        const ans = new Array(n).fill(0);
+        let left = 0, right = n - 1;
+        for (let i = 0; i < n; ++i) {
+            if (nums1[idx1[i]] > nums2[idx2[left]]) {
+                ans[idx2[left]] = nums1[idx1[i]];
+                ++left;
+            } else {
+                ans[idx2[right]] = nums1[idx1[i]];
+                --right;
+            }
+        }
+        return ans;
+    }
+
+    let nums1 = [12,24,8,32], nums2 = [13,25,32,11]  // [,,,12]
+    console.log(advantageCount(nums1, nums2))  // [2,11,7,15]
+</script>
+</body>
+</html>

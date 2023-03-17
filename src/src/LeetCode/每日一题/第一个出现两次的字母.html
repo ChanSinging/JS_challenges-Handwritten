@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第一个出现两次的字母</title>
+</head>
+<body>
+<script type="text/javascript">
+    function repeatedCharacter (s) {
+        // 第一次出现两次的字母，第二次出现的位置要靠前
+        let slow = 0, fast = 0
+        let res = ''
+        let secondIndex = Number.MAX_VALUE
+        const count = new Array(s.length).fill(0)
+        while (slow < s.length) {
+            let temp = s[slow]
+            count[slow] = 1
+            fast = slow + 1
+            while (fast < s.length) {
+                if (s[slow] === s[fast])
+                    count[slow]++
+                if (count[slow] === 2) {
+                    secondIndex = fast < secondIndex ? fast : secondIndex
+                    console.log('s[slow]:' + temp + '第二次出现的下标' + secondIndex);
+                }
+                fast++
+            }
+            slow++
+        }
+        return s[secondIndex]
+    }
+
+    function repeat2 (s) {
+        const seen = new Set();
+        for (let i = 0; i < s.length; i++) {
+            const ch = s[i];
+            if (seen.has(ch)) {
+                return ch;
+            }
+            seen.add(ch);
+        }
+        // impossible
+        return ' '
+    }
+
+    let arr = 'abcdd'   // should be 'c'
+    // console.log(repeat2(arr))
+    // let nums = []
+    // for (let i=0;i<3;i++)
+    //     nums[i]=i
+    console.log(2<<10)
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    　　 <title>文本高亮</title>
+    <style>
+        .bg-red {
+            background-color: #ffb7b7;
+        }
+    </style>
+</head>
+<body>
+<div style="margin: 20px auto;text-align: center;">
+    <input type="text" id="search" placeholder="输入要搜索的内容">
+</div>
+<div style="width: 90%;margin: 20px auto;" id="con">
+    <p>在Web开发中经常会碰到需要动态监听输入框值变化的情况，如果使用 onkeydown、onkeypress、onkeyup 这个几个键盘事件来监测的话，监听不了右键的复制、剪贴和粘贴这些操作，处理组合快捷键也很麻烦。</p>
+    <p>js的replace默认替换只替换第一个匹配的字符，如果字符串有超过两个以上的对应字符就无法进行替换，这时候就要进行一点操作，进行全部替换。 var strM = "这是要被替换的字符串啊啊！...</p>
+    <p>最近在帮公司一个小孩看一个很奇怪的bug,是MFC 的一个小GUI,在客户环境上一个输入框中的数据总是有乱码，导致从数据库中查不出数据。但是奇怪的是在我们环境上重现不了，因为我们的测试环境用的是Win...</p>
+</div>
+</body>
+
+<script>
+    window.onload = function () {
+        let pNodes = document.getElementById('con').getElementsByTagName('p');
+        let searchNode = document.getElementById('search');
+
+        let pTextArr = [];
+        for(let i=0; i<pNodes.length; i++){
+            pTextArr.push(pNodes[i].innerHTML);
+        }
+
+        //监听文本框的内容的变化
+        searchNode.addEventListener('input', function (e) {
+            let text = this.value;　　//要匹配的文字
+            for(let i=0; i<pNodes.length; i++){
+                let pNode = pNodes[i];  //段落节点
+                let pText = pTextArr[i];    //每一段的文字
+                let values = pText.split(text);
+                let pNodeText = values.join('<span class="bg-red">'+text+'</span>');
+                pNode.innerHTML = pNodeText;
+            }
+        })
+    }
+</script>
+</html>

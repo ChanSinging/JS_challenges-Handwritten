@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>threeSumClosest</title>
+</head>
+<body>
+<script type="text/javascript">
+    // 三数之和最靠近target的数
+    // 找数据 在去重
+    // 找数据中 threeSum的值在delta比较中出线
+    function threeSumClosest (nums, target) {
+        nums.sort((a, b) => a - b)
+        const n = nums.length
+        let delta = Number.MAX_VALUE,res = 0  // 每次都在更新
+        for (let i = 0; i < n; i++) {
+            let l = i + 1, r = nums.length - 1, iNum = nums[i]
+            while (l < r) {
+                let lNum = nums[l], rNum = nums[r], threeSum = iNum + lNum + rNum
+                let temp = Math.abs(threeSum - target)
+                console.log(iNum, lNum, rNum)
+                if(temp<delta){
+                    delta = temp
+                    res = threeSum
+                }
+                if (threeSum < target) l++
+                else r--
+            }
+        }
+        return res
+    }
+
+    let nums = [0,0,0]
+    let target = 1
+    console.log(threeSumClosest(nums, target))
+</script>
+</body>
+</html>

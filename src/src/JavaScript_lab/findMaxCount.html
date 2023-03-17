@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    let arr3 = [1, 3, 3, 3, 3, 4]
+    let obj = {}
+    // 使用map结构
+    for (let item in arr3) {
+        if (obj[arr3[item]] == undefined) {//第一次出现的值，计数为1
+            obj[arr3[item]] = 1
+        } else {
+            obj[arr3[item]]++
+        }
+    }
+    console.log(obj.)
+    let maxCount = 0
+    for (let item in obj){
+        maxCount = item>maxCount ? item:maxCount
+    }
+    console.log(maxCount)
+</script>
+</body>
+</html>

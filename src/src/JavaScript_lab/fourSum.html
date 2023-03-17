@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>四个数值和</title>
+</head>
+<body>
+<script type="text/javascript">
+    function fourSum (nums, target) {
+        let n = nums.length, res = []
+        // 数组排序
+        nums.sort((a, b) => a - b)  // [-2, -1, 0, 0, 1, 2]
+        for (let i = 0; i < n - 3; i++) {
+            if (nums[i] === nums[i - 1]) continue
+            for (let j = i + 1; j < n - 2; j++) {
+                // 确定 i 和 j作为中间数
+                let l = j + 1, r = n - 1, iNum = nums[i], jNum = nums[j]// 左右指针 i
+                // 去重
+                if (j > i + 1 && jNum === nums[j - 1]) continue  // j>i+1 才生效
+                while (l < r) {
+                    let lNum = nums[l], rNum = nums[r], fourSum = lNum + rNum + iNum + jNum
+                    if (fourSum > target) r--
+                    if (fourSum < target) l++
+                    if (fourSum === target) {
+                        // 相等的情况
+                        console.log(iNum, jNum, nums[l], nums[r])
+                        res.push([iNum, jNum, nums[l], nums[r]])
+                        // l和r去重  去除重复的数据组合
+                        while (l < r && nums[l] === nums[l + 1]) l++  // 写错了
+                        while (l < r && nums[r] === nums[r - 1]) r--
+                        l++
+                        r--
+                    }
+                }
+            }
+        }
+        return res
+    }
+
+    let nums = [-3, -2, -1, 0, 0, 1, 2, 3]
+    let target = 0
+    console.log(fourSum(nums, target))  //[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+    // [[-3,-2,2,3],[-3,-1,1,3],[-3,0,0,3],[-3,0,1,2],[-2,-1,0,3],[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+</script>
+</body>
+</html>

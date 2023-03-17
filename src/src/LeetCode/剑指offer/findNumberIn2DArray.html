@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>findNumberIn2DArray</title>
+</head>
+<body>
+<script type="text/javascript">
+    function findNumberIn2DArray (matrix, target) {
+        let count = 0
+        for (let i = 0; i < matrix[0].length; i++) {   // 全部遍历完才能
+            for (let j = 0; j < matrix[1].length; j++) {
+                if (matrix[i][j] === target) {
+                    count++
+                } else {
+                    continue
+                }
+            }
+        }
+        return !!count
+    }
+
+    function findNumberIn2DArray2(matrix, target) {
+        const m = matrix.length, n = matrix[0].length;
+        let x = 0, y = n - 1;
+        while (x < m && y >= 0) {
+            if (matrix[x][y] === target) {
+                return true;
+            }
+            if (matrix[x][y] > target) {
+                --y;
+            } else {
+                ++x;
+            }
+        }
+        return false;
+    }
+    let nums = [[1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30]]
+    let target = 5
+    console.log(findNumberIn2DArray2(nums, target))
+
+</script>
+</body>
+</html>

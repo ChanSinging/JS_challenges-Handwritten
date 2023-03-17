@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类数组</title>
+    <div>
+        <select>ddd</select>
+    </div>
+</head>
+<body>
+<script type="text/javascript">
+    var res = Array.from({length: 3})
+    var tmp = [...document.querySelectorAll("div")];
+
+    console.log(tmp)
+    // 创建对象
+    let foo = Object.create(null)
+    let boo = {}
+    console.log(boo)
+    console.log(foo)
+    console.log('========')
+    const arr = [10,30,50,60,11];
+    console.log(Math.max.apply(null, arr))
+    console.log(Math.max(...arr))
+</script>
+</body>
+</html>
