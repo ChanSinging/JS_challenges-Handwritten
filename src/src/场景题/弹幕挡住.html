@@ -1,0 +1,42 @@
+<!--
+ * @Descripttion: 
+ * @Author: chansinging
+ * @version: 
+ * @Date: 2023-04-06 16:32:43
+ * @LastEditors: chansinging
+ * @LastEditTime: 2023-04-06 16:32:57
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>测试弹幕如何做到不遮挡人像</title>
+    <style>
+        .video {
+            width: 668px;
+            height: 376px;
+            position: relative;
+            -webkit-mask-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKIHdpZHRoPSI2NjhweCIgc3R5bGU9InRyYW5zZm9ybTpzY2FsZSgxLDEuMDAxKTsiIGhlaWdodD0iMzc1Ljc1cHgiIHZpZXdCb3g9IjAgMCAzMjAuMDAwMDAwIDE4MC4wMDAwMDAiCiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0Ij4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsMTgwLjAwMDAwMCkgc2NhbGUoMC4xMDAwMDAsLTAuMTAwMDAwKSIKZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSJub25lIj4KPHBhdGggZD0iTTAgOTA1IGwwIC04OTUgNDYwIDAgNDYwIDAgMCA4NCBjMCA0NiA0IDg2IDggODggMTYgNiAxMjIgMjE5IDEyMiAyNDQgMCAxNQotMTUgMzkgLTQxIDY1IC02MSA2MSAtNjUgODMgLTMyIDE2OCAxNiA0MiA0NSA5MiA3MCAxMjAgNDQgNTEgNDcgNTIgMjIxIDEwMAoyMyA2IDQyIDE3IDQyIDI0IDAgNyAtMTUgNDEgLTMzIDc3IC02NyAxMzEgLTcyIDIyMiAtMTggMzI3IDM5IDc3IDczIDExNiAxMzUKMTU2IDQ5IDMxIDU0IDMyIDE1MSAzMSAxOTEgLTIgMjc5IC03MSAzMDEgLTIzNiA0IC0yNiAxMyAtNTMgMjAgLTU5IDggLTYgMTQKLTIyIDE0IC0zNSAwIC0xMiAxMSAtMzUgMjQgLTUwIDIzIC0yNyAyNSAtMjggNjYgLTE1IDM1IDEwIDQ1IDE5IDYxIDU3IDExIDI0CjI2IDk0IDM0IDE1NSAxNSAxMjIgMzUgMTYzIDEwNCAyMTggNzQgNTkgMTc4IDc5IDI0MCA0NiAxNiAtOCA0OCAtMTcgNzIgLTIxCjU1IC04IDE0MyAtNTkgMTc2IC0xMDMgMTQgLTE4IDMyIC01MyAzOSAtNzggMjAgLTY4IC00IC0xNzAgLTUyIC0yMTUgLTIxIC0yMAotMzYgLTQ2IC00MCAtNjggLTQgLTE5IC0xNSAtNDYgLTI0IC02MCAtOSAtMTQgLTIzIC00OSAtMzAgLTc5IC0xMSAtNDUgLTE3Ci01NiAtNDIgLTY1IC0yMSAtOCAtMzEgLTIwIC0zOSAtNDkgLTkgLTM0IC04IC00MiAxMCAtNTggMjQgLTIzIDEwMSAtNDUgMTI0Ci0zNiAxMCA0IDE3IDE3IDE3IDMxIDAgMTQgNyAzMiAxNyA0MSAxMyAxMyAxNCAxOCAzIDI1IC03IDQgLTEwIDE1IC03IDI0IDQgOQoyIDE2IC0zIDE2IC01IDAgLTE0IDEwIC0yMSAyMSAtMTggMzQgNCAxOCA2MSAtNDYgMzAgLTMzIDU5IC01OSA2NCAtNTcgNSAyCjEzIC0zIDE3IC0xMCA2IC04IDkgLTkgOSAtMiAwIDIxIDMxIDI0IDkyIDkgOTcgLTI2IDE2NSAtNjEgMjI0IC0xMTcgbDU2IC01MwotNCAtMTQ1IGMtMyAtMTYyIC0xMiAtMTg3IC03NiAtMjEwIC0xOCAtNiAtNjMgLTI5IC0xMDAgLTUwIC02MSAtMzUgLTY5IC00MwotODEgLTg1IC04IC0yNiAtMjIgLTUyIC0zMiAtNTggLTExIC03IC0xOSAtMjMgLTE5IC0zOSBsMCAtMjggMTkwIDAgMTkwIDAgMAo4OTUgMCA4OTUgLTE2MDAgMCAtMTYwMCAwIDAgLTg5NXoiLz4KPC9nPgo8L3N2Zz4K");
+            -webkit-mask-size: 668px 376px;
+            background-color: bisque;
+        }
+        
+        .bullet {
+            position: absolute;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video">
+        <div class="bullet" style="left: 100px; top: 0;">你好</div>
+        <div class="bullet" style="left: 200px; top: 20px;">很高兴认识你</div>
+        <div class="bullet" style="left: 300px; top: 40px;">嗨</div>
+        <div class="bullet" style="left: 400px; top: 60px;">我是团131231231子</div>
+        <div class="bullet" style="left: 350px; top: 30px;">测试一下弹幕遮挡效果</div>
+    </div>
+</body>
+
+</html>
