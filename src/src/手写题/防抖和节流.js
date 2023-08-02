@@ -49,3 +49,13 @@ function debounce1(fn, wait){
         }, wait)
     }
 }
+
+// 调用第三方库lodash实现防抖和节流
+// 可以使用_.debounce函数来创建一个防抖函数。这个函数接受两个参数：要执行的函数和延迟时间（毫秒）。
+const debouncedFn = _.debounce(myFunction, 500);
+// 添加函数的监听
+input.addEventListener('input', debouncedFn);
+
+// 节流
+const throttledFn = _.throttle(myFunction, 500);
+input.addEventListener('input', throttledFn);
