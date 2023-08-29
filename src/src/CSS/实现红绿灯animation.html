@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>使用动画实现红绿灯</title>
+</head>
+<body>
+<div class="traffic-light">
+    <div class="light red"></div>
+    <div class="light yellow"></div>
+    <div class="light green"></div>
+</div>
+</body>
+</html>
+<style>
+    .traffic-light {
+        width: 100px;
+        height: 300px;
+        background-color: #000;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .yellow {
+        background-color: yellow;
+    }
+
+    .green {
+        background-color: green;
+    }
+
+    .light {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        animation-name: trafficLight;
+        animation-duration: 4s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+    }
+    @keyframes trafficLight {
+        0% {
+            opacity: 0.3;
+        }
+        25% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.3;
+        }
+        75% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0.3;
+        }
+    }
+
+</style>
