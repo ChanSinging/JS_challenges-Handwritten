@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>animation实现轮播图</title>
+</head>
+<body>
+<div class="content">
+    <div class="slider slide-1">Slide 1</div>
+    <div class="slider slide-2">Slide 1</div>
+    <div class="slider slide-3">Slide 1</div>
+</div>
+</body>
+</html>
+<style>
+    .content {
+        width: 300px;
+        height: 100px;
+        background-color: gray;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .slide-1 {
+        background-color: blue;
+        animation-delay: 0s;
+    }
+    .slide-2 {
+        background-color: green;
+        animation-delay: 5s;
+    }
+    .slide-3 {
+        background-color: red;
+        animation-delay: 10s;
+    }
+    .slider {
+        animation-name: slide;
+        animation-duration: 4s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+    }
+    @keyframes slide {
+        0% {
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        33.33% {
+            opacity: 1;
+        }
+        53.33% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+</style>

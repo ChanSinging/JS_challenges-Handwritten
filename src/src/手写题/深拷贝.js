@@ -65,6 +65,27 @@ const target = {
 
 console.log(deepClone3(target))
 
+// 铂金段位 正确理解引用类型概念的能力；精确判断数据类型的能力。
+function deepClone5(){
+	let map = new Map()
+	function deepClone (target) {
+        if (target !== null && typeof target === 'object') {
+            let result =  Array.isArray(target) ? [] : {};
+            if(map.get(target)) return map.get(target);//返回自身
+            map.set(target, result);
+            for (let k in target) {
+                if (target.hasOwnProperty(k)) {
+                    result[k] = deepClone(target[k]);
+                }
+            }
+            return result;
+        } else {
+            return target;
+        }
+    }
+    return deepClone(target)
+}
+
 // 星耀版深拷贝
 function deepClone4(target) {
     // 获取数据类型

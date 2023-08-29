@@ -51,12 +51,10 @@ function MyPromise (fn) {
                 // 设置传入的值
                 self.value = value
                 // 执行回调函数
-                // self.rejectedCallbacks.forEach(callback => {
-                //     callback(value)
-                // })
-                for (let i=0;i<self.rejectedCallbacks.length;i++){
-                    self.rejectedCallbacks(value)
-                }
+                self.rejectedCallbacks.forEach(callback => {
+                    callback(value)
+                })
+                
             }
         }, 0)
     }

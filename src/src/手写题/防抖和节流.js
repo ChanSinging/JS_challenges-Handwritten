@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @Author: chansinging
+ * @version: 
+ * @Date: 2023-03-17 10:21:53
+ * @LastEditors: chansinging
+ * @LastEditTime: 2023-08-03 15:30:16
+ */
 /**
  * @name: 防抖和节流
  * @author: cxy

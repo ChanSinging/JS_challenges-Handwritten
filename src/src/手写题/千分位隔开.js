@@ -8,6 +8,7 @@
 // 有小数点 和无小数点通用
 const format1 = (n) => {
     let str = n.toString() // 包含小数的字符串
+    // 提取负号 todo..
     let decimal = str.split('.')[1] // 小数
     let num = str.split('.')[0]  // 整数
     let count = 0

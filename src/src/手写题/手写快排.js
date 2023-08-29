@@ -6,9 +6,10 @@
  * @update: 2023/2/27 10:06
  */
 function quickSort (nums, l, r) {
+    console.log(l + '-' + r);
     // 使用C++的模板
     if (l >= r) return
-    let i = l - 1, j = r + 1, mid = nums[l + r >> 1]
+    let i = l-1, j = r+1, mid = nums[l + r >> 1]
     while (i < j) {
         i++
         while (nums[i] < mid) i++
@@ -16,7 +17,7 @@ function quickSort (nums, l, r) {
         while (nums[j] > mid) j--
         if (i < j) {
             let tmp = nums[i]
-            nums[i] = nums[j    ]
+            nums[i] = nums[j]
             nums[j] = tmp
         }
     }
