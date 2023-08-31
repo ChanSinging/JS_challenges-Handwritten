@@ -5,7 +5,7 @@ function parent(){
 function child(){
 	this.age = 10;
 }
-child.prototype = new parent();
+child.prototype = new parent();  // use prototype
 var child = new child();
 
 // console.log(child.name);
@@ -15,7 +15,7 @@ function parent(){
 	this.name = 'xx1';
 }
 function child2(){
-	parent.call(this)
+	parent.call(this) // use call
 	this.age = 10;
 }
 var child2 = new child2();

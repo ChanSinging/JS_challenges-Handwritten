@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My HTML Page</title>
+</head>
+<body>
+  <h1>Hello, World!</h1>
+  
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+  
+  <script>
+    // 获取 Canvas 元素和上下文
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // 设置小球的初始位置和速度
+    let x = canvas.width / 2;
+    let y = canvas.height / 2;
+    let dx = 2;
+    let dy = -2;
+    const ballRadius = 10;
+
+    // 绘制小球的函数
+    function drawBall() {
+      ctx.beginPath();
+      ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    // 更新小球位置的函数
+    function updateBallPosition() {
+      // 清除 Canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 绘制小球
+      drawBall();
+      // 更新小球的位置
+      x += dx;
+      y += dy;
+      // 碰撞检测，使小球在边界反弹
+      if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+      }
+      if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+        dy = -dy;
+      }
+    }
+
+    // 动画循环
+    function animate() {
+      requestAnimationFrame(animate);
+      updateBallPosition();
+    }
+
+    // 启动动画
+    animate();
+  </script>
+</body>
+</html>
