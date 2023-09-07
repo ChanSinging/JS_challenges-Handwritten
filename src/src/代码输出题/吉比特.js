@@ -12,16 +12,17 @@
 // Fn3.prototype = {a: 4}
 // var fn3 = new Fn3();
 // Fn1.cal1(fn3);
-var m = 1,
-j= (k = 0);
-function add(n){
-	return (n = n + 1);
-}
-y = add(m);
-function add(n) {
-	return (n = n + 3);
+// var m = 1,
+// j= (k = 0);
+// function add(n){
+// 	return (n = n + 1);
+// }
+// y = add(m);
+// function add(n) {
+// 	return (n = n + 3);
 	
-}
-z = add(m);
-console.log(y +""+ z);
-console.log(null==undefined);
+// }
+// z = add(m);
+// console.log(y +""+ z);
+// console.log(null==undefined);
+console.log("12" + 3);
