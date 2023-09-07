@@ -1,7 +1,6 @@
 function render(tpl, data) {
 	const pattern = /\{\{(.*?)\}\}/g; // 匹配模板中的占位符，如 {{name}}
 	return tpl.replace(pattern, (match, key) => {
-		console.log(match);
 	  const value = data[key.trim()]; // 根据占位符的键从数据中获取对应的值
 	  return value !== undefined ? value : match; // 如果值存在则替换占位符，否则保持原样
 	});

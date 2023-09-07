@@ -7,7 +7,7 @@
  * @LastEditTime: 2023-04-14 16:24:37
  */
 // JS观察者模式 on off emit once  该题也是手写eventBus
-class Event{
+class EventEmitter{
     constructor(){
         this.task = {}
     }
@@ -39,3 +39,21 @@ class Event{
         this.on(event, wrapFanc)
     }
 }
+
+const emitter = new EventEmitter();
+
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+
+function farewell(name) {
+  console.log(`Goodbye, ${name}!`);
+}
+
+// 订阅事件
+emitter.on("greet", greet);
+emitter.on("farewell", farewell);
+
+// 发布事件
+emitter.emit("greet", "John"); // 输出: Hello, John!
+emitter.emit("farewell", "Alice"); // 输出: Goodbye, Alice!
