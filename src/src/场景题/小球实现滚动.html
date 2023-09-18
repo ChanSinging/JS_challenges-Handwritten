@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>My HTML Page</title>
+</head>
+
+<body>
+	<h1>Hello, World!</h1>
+
+	<!-- <canvas id="myCanvas" width="400" height="400"></canvas> -->
+	<div class="ball">2</div>
+	<script>
+	</script>
+</body>
+<style>
+	.ball {
+		width: 50px;
+		height: 50px;
+		background-color: red;
+		border-radius: 50%;
+		position: relative;
+		animation: ballAnimation 3s infinite;
+	}
+	@keyframes ballAnimation{
+		0%{
+			left: 0;
+		}
+		50%{
+			left: 200px;
+		}
+		100%{
+			left: 0;
+		}
+	}
+</style>
+
+</html>
