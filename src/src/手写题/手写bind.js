@@ -5,11 +5,12 @@ function myBind(context){
 	const fn = this;
 	return function Fn(){
 		return fn.apply(
-			this instanceof Fn ? this :context,
+			this instanceof Fn ? this : context,
 			args.concat(...arguments)
 		)
 	}
 }
+
 // 手写call apply
 function myApply(context){
 	// 判断是否是函数

@@ -1,4 +1,5 @@
 // 继承关系  原型链继承、构造函数继承、ES6 的 class 继承
+// 原型链继承
 function parent(){
 	this.name = 'xx';
 }
