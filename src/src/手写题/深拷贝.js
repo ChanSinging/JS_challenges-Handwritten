@@ -35,7 +35,6 @@ function deepClone3(target) {
     if(target !== null && typeof target === 'object') {
         // 判断是否是数组
         let result = Array.isArray(target) ? [] : {};
-        // let result = ''
         for(let k in target) {
             if(target.hasOwnProperty(k)){
                 result[k] = deepClone3(target[k])

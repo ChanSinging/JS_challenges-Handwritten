@@ -12,7 +12,6 @@ import 'tass-ui/es/style.css';
 
 const app = createApp(App);
 app.use(TassUI).mount('#app');
-
 // Vue.use(ElementUI);
 // new Vue({
 // 	el: '#app',

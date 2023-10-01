@@ -8,21 +8,38 @@
 function deepClone (obj) {
     return JSON.parse(JSON.stringify(obj))
 }
-
-function deepClone3 (obj) {
-    // 判断obj类型，遍历，新建newObj（判断类型），判断has....，放入new，递归
-    if (obj !== null && typeof obj === 'object') {
-        let result = Array.isArray(obj) ? [] : {}
-        for (let k in obj) {
-            // if(obj === obj[k]) continue
-            if (obj.hasOwnProperty(k)) {
-                result[k] = deepClone3(obj[k]) // 递归赋值
+function deepClone3(target){
+    if(target!==null && typeof target == 'object'){
+        let res = Array.isArray(target) ? [] : {};
+        for(let k in target){
+            if(target.hasOwnProperty(k)){
+                res[k] = deepClone3(target[k])
             }
         }
-        return result
-    } else {
-        return obj
+        return res;
+    }else{
+        return target;
     }
+}
+// 修改成map
+function deepClone4(targte){
+    let map = new Map();
+    const deepClone = (target) => {
+        if(target!==null && typeof target == 'object'){
+            let res = Array.isArray(target) ? [] : {};
+            for(let k in target){
+                if(target.hasOwnProperty(k)){
+                    if(map.get(k)) return target;
+                    map.set(target, res);
+                    res[k] = deepClone3(target[k])
+                }
+            }
+            return res;
+        }else{
+            return target;
+        }
+    }
+    return deepClone(targte)
 }
 
 const target = {
@@ -36,6 +53,4 @@ const target = {
         }
     }
 };
-console.log(deepClone3(target))
-let proto = target.prototype
-console.log(proto);
+console.log(deepClone4(target))

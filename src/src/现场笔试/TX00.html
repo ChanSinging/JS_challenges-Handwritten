@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset=utf-8>
+	<style type="text/css">
+		div {
+			margin: 10px;
+		}
+
+		input {
+			padding: 4px;
+			outline-style: none;
+			border: 1px solid #333;
+			border-radius: 2px;
+			font-size: 18px;
+		}
+
+		input:focus {
+			box-shadow: 0 0 4px #333;
+		}
+	</style>
+</head>
+
+<body>
+	<section>
+		<div id="cp">
+			<input id="salt" type="text" value="" placeholder="salt" size="10">
+			<input id="text" type="text" value="" placeholder="text" size="15">
+			<input id="cipheredText" type="text" placeholder="ciphered text">
+			<button id="cpbutton" onclick="cpbutton()">加密</button>
+
+		</div>
+		<div id="dcp">
+			<input id="salt" type="text" value="" placeholder="salt" size="10">
+			<input id="cipheredText" type="text" value="" placeholder="ciphered text" size="15">
+			<input id="text" type="text" placeholder="text">
+			<button id="dcpbutton" onclick="dcpbutton()">解密</button>
+
+		</div>
+	</section>
+
+	<script type="text/javascript">
+		var cipher = salt => {
+			// tip: 该方法返回一个保留了salt的加密方法
+
+			const textToChars = text => {
+				// TODO: 获取每个字符的Unicode编码
+				let res = [];
+				for (let i = 0; i < text.length; i++) {
+					// const char = text.charAt(i);
+					const unicode = text.charCodeAt(i);
+					res.push(unicode);
+				}
+				return res;
+
+			}
+			const applySaltToChar = code => {
+				// TODO: 将salt值每个字符的Unicode编码"撒"在待加密内容各个字符的Unicode编码上，并返回该Unicode编码
+				const saltedChars = [];
+				for (let i = 0; i < code.length; i++) {
+					const char = code[i];
+					const saltChar = salt[i % salt.length]; // 循环使用盐值字符
+					// const charCode = char.charCodeAt(0);
+					const saltCharCode = saltChar.charCodeAt(0);
+					const saltedCharCode = char + saltCharCode; // 将盐值的Unicode编码添加到字符的Unicode编码上
+					saltedChars.push(saltedCharCode);
+				}
+				return saltedChars;
+			}
+			const toHex = code => {
+				// TODO: 将每项都转换为16进制数
+				// tip: 注意当某个16进制数仅有1个字符时，如:"e"转换为"0e"
+				const hexArray = [];
+				for (let i = 0; i < code.length; i++) {
+					const char = code[i].toString(16); // 将字符的Unicode编码转换为16进制字符串
+					const paddedHex = char.length === 1 ? "0" + char : char; // 如果仅有一个字符，补0到前面
+					hexArray.push(paddedHex);
+				}
+				return hexArray.join("");
+			}
+			return text => text.split('')
+				.map(textToChars)
+				.map(applySaltToChar)
+				.map(toHex)
+				.join('')
+		}
+		var decipher = salt => {
+			// tip: 该方法返回一个保留了salt的解密方法
+
+			const textToChars = text => {
+				// TODO: 获取每个字符的Unicode编码
+				let res = [];
+				for (let i = 0; i < text.length; i++) {
+					const unicode = text.charCodeAt(i);
+					res.push(unicode);
+				}
+				return res;
+
+			}
+			const applySaltToChar = code => {
+				// TODO: 将salt值每个字符的Unicode编码"撒"在待解密内容各个字符的Unicode编码上，并返回该Unicode编码
+				const saltedChars = [];
+				for (let i = 0; i < code.length; i++) {
+					const char = code[i];
+					const saltChar = salt[i % salt.length]; // 循环使用盐值字符
+					const saltCharCode = saltChar.charCodeAt(0);
+					const saltedCharCode = char + saltCharCode; // 将盐值的Unicode编码添加到字符的Unicode编码上
+					saltedChars.push(saltedCharCode);
+				}
+				return saltedChars;
+
+			}
+			return cipheredText => cipheredText.match(/.{2}/g)
+				.map(Hex => parseInt(Hex, 16))
+				.map(applySaltToChar)
+				.map(code => String.fromCharCode(code))
+				.join('')
+		}
+		var cpbutton = () => {
+			const salt = document.querySelector('#cp #salt').value
+			const text = document.querySelector('#cp #text').value
+			const cp = cipher(salt)
+			const cpt = cp(text)
+			document.querySelector('#cp #cipheredText').value = cpt
+		}
+		var dcpbutton = () => {
+			const salt = document.querySelector('#dcp #salt').value
+			const cipheredText = document.querySelector('#dcp #cipheredText').value
+			const dcp = decipher(salt)
+			const dcpt = dcp(cipheredText)
+			document.querySelector('#dcp #text').value = dcpt
+		}
+	</script>
+</body>
+
+</html>

@@ -9,8 +9,6 @@
  这个方法返回一个新的promise对象，遍历传进来的参数用Promise将参数包一层，变成一个promise对象
  参数所有回调成功才是成功
  **/
-const MyPromise = require('手写promise')
-
 function promiseAll(promises) {
     return new Promise(function (resolve, reject) {
         if(!Array.isArray(promises)){
@@ -22,7 +20,6 @@ function promiseAll(promises) {
         let resolvedResult = []
         // 一次遍历promise数组
         for (let i = 0; i < promiseNum; i++) {
-
             Promise.resolve(promises[i].then(value => {
                 resolvedCounter++
                 resolvedResult[i] = value
@@ -33,30 +30,6 @@ function promiseAll(promises) {
             }, error=>{
                 return reject(error)
             }))
-        }
-    })
-}
-// test
-
-function promiseAll2(promises) {
-    return new Promise((resolve, reject) => {
-        if(typeof promises !== 'Array'){
-            throw new TypeError(`argument is not array`)
-        }
-        let resolveCount = 0
-        let promiseNums = promises.length
-        let result = []
-        for (let i = 0; i < promises.length; i++) {
-            Promise.resolve(promises[i]).then((value) => {
-                resolveCount++
-                result[i] = value
-                if(resolveCount === promiseNums) {
-                    return resolve(result)
-                }
-            }, error=>{
-                return reject(error)
-            })
-
         }
     })
 }
