@@ -1,13 +1,13 @@
 const axios = require('axios');
 
-// 
-function axiosRequest(urls){
-	const promsies = urls.map(url => axios.get(url));
-	return Promise.all(promsies).then((reponses)=>{
-		return reponses.map(reponse => reponse.data)
+// 封装axois
+function axiosRequest(urls) {
+	// use promise all 解决
+	const promises = urls.map(url => axios.get(url));
+	return Promise.all(promises).then(res=>{
+		return res.map(res =>res.data);
 	}).catch(err=>{
-		console.log(err);
-		throw err;
+		return err;
 	})
 }
 const urls = ['https://api.example.com/data1', 'https://api.example.com/data2'];

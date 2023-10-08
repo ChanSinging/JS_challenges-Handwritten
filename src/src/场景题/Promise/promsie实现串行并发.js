@@ -22,7 +22,6 @@ function inOrder(arr) {
 	})
 }
 function fetchInSequence(url) {
-	let res = [];
 	return url.reduce((pre, cur) => {
 		return pre.then((res) => {
 			return fetch(cur).then(response => res.push(response))
