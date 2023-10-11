@@ -9,12 +9,10 @@ function fn (arr) {
     let arr1 = []
     // 递归进fn 最底层是用arr.push()
     arr.forEach((val) => {
-        if (val instanceof Array) {  // 判断是不是数组
+        if (val instanceof Array) {  // 判断是不是数组 Array.isArray();
             arr1 = arr1.concat(fn(val))
-            console.log('val 在 array原型链上' + `${val}`)
         } else {
             arr1.push(val)
-            console.log('val 不在 array原型链上' + `${val}`)
         }
     })
 
@@ -26,11 +24,6 @@ function fn2 (arr) {
     return arr.reduce((prev, cur) => {
         return prev.concat(Array.isArray(cur) ? fn(cur) : cur)
     }, [])
-}
-
-// 使用reduce实现
-function fn5 (arr) {
-    return arr.reduce((a, b) => a.concat(Array.isArray(b) ? fn5(b) : b), [])   // 相比原始的 (deep=1，Array.isArray(b)?fn5(b) :b) 再次向下遍历
 }
 
 function fn3 (arr) {
@@ -47,8 +40,27 @@ function fn4 (arr) {
     return arr1
 }
 
-//
+// 拍平数组，设置层数
+function fn5(arr, depth){
+    // let res = [];
+    // return arr.reduce((pre, cur)=>{
+    //     if(Array.isArray(cur) && depth>0){
+    //         return pre.concat(fn(cur, depth-1))
+    //     }else{
+    //         return pre.concat(cur)
+    //     }
+    // }, [])   
+}
+function flattenArray(arr, depth) {
+    return arr.reduce((result, item) => {
+      if (Array.isArray(item) && depth > 0) {
+        return result.concat(flattenArray(item, depth - 1));
+      } else {
+        return result.concat(item);
+      }
+    }, []);
+  }
 
-var arr = [1, 2, [3, 4, 5, [6, 7, 8], 9], 10, [11, 12]];
-console.log(fn(arr))
+var arr = [1, [2, [3, [4, 5]]]];;
+console.log(flattenArray(arr, 2))
 // 重点学习fn fn3

@@ -66,7 +66,7 @@ console.log(deepClone3(target))
 
 // 铂金段位 正确理解引用类型概念的能力；精确判断数据类型的能力。
 function deepClone5(){
-	let map = new Map()
+	let map = new WeakMap();
 	function deepClone (target) {
         if (target !== null && typeof target === 'object') {
             let result =  Array.isArray(target) ? [] : {};

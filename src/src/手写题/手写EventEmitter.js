@@ -23,7 +23,6 @@ class EventEmitter{
     }
     emit(event, ...args){ // 触发事件
         const eventListener = this.task[event];
-        const res = this.task[event];
         if(eventListener){
             eventListener.forEach(callback => {
                 callback(...args);

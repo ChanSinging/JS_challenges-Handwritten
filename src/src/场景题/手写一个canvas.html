@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<canvas id="canvas"></canvas>
+	<script type="text/javascript">
+		let canvas = document.getElementById('canvas');
+		let ctx = canvas.getContext('2d');
+		ctx.width = 300;
+		ctx.height = 300;
+		// 画圈
+		ctx.fillStyle = 'yellow';
+		ctx.fillRect(0, 0, 50, 100);
+
+		ctx.strokeStyle = 'blue';
+		ctx.strokeRect(10, 120, 50, 100);
+
+		// let img = new Image();
+		// img.onload = () => {
+		// 	// 画图片
+		// 	ctx.drawImage(img, 60, 0)
+		// 	// toImage
+		// 	var dataImg = new Image()
+		// 	dataImg.src = canvas.toDataURL('image/png')
+		// 	document.body.appendChild(dataImg) // 长按图片保存
+		// }
+		// img.crossOrigin = 'anonymous'
+		// img.src = 'https://nos.netease.com/easyread/fle/a0df1d4009c7a2ec5fee/1524215500140/avatar.png?' + (+new Date())
+	</script>
+</body>
+
+</html>

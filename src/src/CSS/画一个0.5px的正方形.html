@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>React App</title>
+</head>
+<style>
+	body {
+		margin: 0
+	}
+
+	.square {
+		position: relative;
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
+	}
+
+	.square::before {
+		content: "";
+		position: absolute;
+		top: 0.25px;
+		/* 上边框位置偏移量 */
+		left: 0.25px;
+		/* 左边框位置偏移量 */
+		width: calc(100% - 0.5px);
+		/* 去除边框宽度 */
+		height: calc(100% - 0.5px);
+		/* 去除边框宽度 */
+		border: 0.5px solid black;
+		/* 边框样式 */
+		transform: scale(0.5);
+		/* 缩放为原来的一半 */
+		transform-origin: top left;
+		/* 设置缩放的原点为左上角 */
+	}
+</style>
+
+<body>
+	<div class="square"></div>
+</body>
+
+</html>

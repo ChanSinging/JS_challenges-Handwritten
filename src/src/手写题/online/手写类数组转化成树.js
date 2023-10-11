@@ -37,8 +37,7 @@ function arr2tree2 (data) {
         let parent = map[param.pid]
         // 如果存在parent
         if(parent){
-            ( parent.children || (parent.children=[])).push(param)
-            console.log(parent.children)
+            (parent.children ||(parent.children=[])).push(param)
         } else {
             res.push(param)
         }

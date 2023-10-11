@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>左侧导航栏，右侧 header+body的布局</title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="sidebar">
+			<!-- 左侧导航栏内容 -->
+		</div>
+		<div class="content">
+			<header>
+				<!-- 右侧头部内容 -->
+			</header>
+			<div class="body">
+				<!-- 右侧主体内容 -->
+			</div>
+		</div>
+	</div>
+</body>
+<style>
+	.container {
+		display: flex;
+		/* 使用 Flex 布局 */
+	}
+
+	.sidebar {
+		width: 200px;
+		/* 左侧导航栏宽度 */
+		background-color: #f0f0f0;
+		/* 左侧导航栏背景色 */
+	}
+
+	.content {
+		flex: 1;
+		/* 右侧内容占据剩余空间 */
+		display: flex;
+		/* 使用 Flex 布局 */
+		flex-direction: column;
+		/* 垂直排列 */
+	}
+
+	header {
+		height: 60px;
+		/* 右侧头部高度 */
+		background-color: #ccc;
+		/* 右侧头部背景色 */
+	}
+
+	.body {
+		flex: 1;
+		/* 主体内容占据剩余空间 */
+		padding: 20px;
+		/* 右侧主体内容内边距 */
+	}
+</style>
+
+</html>
