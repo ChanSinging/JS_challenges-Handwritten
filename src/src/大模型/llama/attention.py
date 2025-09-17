@@ -1,46 +1,116 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
+from transformers import PretrainedConfig
+import math
+from embeding import apply_rotary_emb, repeat_kv
 
-def repeat_kv(x: torch.Tensor, n_rep: int):
-	# 获取输⼊张量的形状：批量⼤⼩、序列⻓度、键/值对头的数量、每个头的维度⼤⼩
-	batch_size, slen, n_kv_heads, head_dim = x.shape
-	# 如果重复次数是1，返回原始张量
-	if n_rep == 1:
-		return x
-	# 对张量进行扩展和重塑操作以重复键值对
-	return (
-		x[:,:,:,None,:]
-		.expand(batch_size, slen, n_kv_heads, n_rep, head_dim)
-		.reshape(batch_size, slen, n_kv_heads*n_rep, head_dim)
-	)
+class ModelConfig(PretrainedConfig):
+    model_type = "Tiny-K"
+    def __init__(
+            self,
+            dim: int = 768,
+            n_layers: int = 12,
+            n_heads: int = 16,
+            n_kv_heads: int = 8,
+            vocab_size: int = 6144,
+            hidden_dim: int = None,
+            multiple_of: int = 64,
+            norm_eps: float = 1e-5,
+            max_seq_len: int = 512,
+            dropout: float = 0.0,
+            flash_attn: bool = True,
+            **kwargs,
+    ):
+        self.dim = dim
+        self.n_layers = n_layers
+        self.n_heads = n_heads
+        self.n_kv_heads = n_kv_heads
+        self.vocab_size = vocab_size
+        self.hidden_dim = hidden_dim
+        self.multiple_of = multiple_of
+        self.norm_eps = norm_eps
+        self.max_seq_len = max_seq_len
+        self.dropout = dropout
+        self.flash_attn = flash_attn
+        super().__init__(**kwargs)
 
-# 旋转嵌入，获取一个实部和虚部
-def precompute_freq_cis(dim: int, end: int, theta: float = 1000.0):
-	# torch.arange(0, dim, 2)[: (dim // 2)].float()生成了一个从0开始，步长为2的序列，长度为dim的一半
-	# 每个元素除以dim，再取theta的倒数，得到频率
-	freqs = 1.0 / (theta ** torch.arange(0, dim, 2)[: (dim // 2)].float() / dim)
-	t = torch.arange(end, device=freqs.device)
-	# 计算外积
-	freqs = torch.outer(t, freqs).float()
-	# 计算频率的余弦值
-	freqs_cos = torch.cos(freqs)
-	# 计算频率的正弦值
-	freqs_sin = torch.sin(freqs)
-	return freqs_cos, freqs_sin
+class Attention(nn.Module):
+    def __init__(self, args: ModelConfig):
+        super().__init__()
+        # 根据是否指定n_kv_heads，确定用于键
+        self.n_kv_head = args.n_heads if args.n_kv_heads is None else args.n_kv_heads
+        # 确保总头数可以被键值头数整除。
+        assert args.n_heads % self.n_kv_head == 0
+        
+        # 模型并行处理
+        model_parallel_size = 1
+        # 本地计算头数
+        self.n_local_heads = args.n_heads // model_parallel_size
+        # 本地键值头
+        self.n_local_kv_heads = self.n_kv_head // model_parallel_size
+        # 重复次数，用于扩展键和值的尺寸
+        self.n_rep = self.n_local_heads // self.n_local_kv_heads
+        # 每个头的维度
+        self.head_dim = args.dim // args.n_heads
+        
+        # 定义投影的权重矩阵
+        self.wq = nn.Linear(args.dim, args.n_heads * self.head_dim, bias=False)
+        self.wk = nn.Linear(args.dim, args.n_heads * self.head_dim, bias=False)
+        self.wv = nn.Linear(args.dim, args.n_heads * self.head_dim, bias=False)
+        # 输出权重
+        self.wo = nn.Linear(args.n_heads * self.head_dim, args.dim, bias=False)
+        
+        # 定义dropout
+        self.attn_dropout = nn.Dropout(args.dropout)
+        self.resid_dropout = nn.Dropout(args.dropout)
+        self.dropout = args.dropout
+        
+        # 检查是否支持flash attention
+        self.flash = hasattr(torch.nn.functional, 'scaled_dot_product_attention')
+        if not self.flash:
+            # 若不支持flash
+            print("WARNING")
+            mask = torch.full((1, 1, args.max_seq_len, args.max_seq_len), float("-inf"))
+            mask = torch.triu(mask, diagonal=1)
+            # 注册为模型的缓存
+            self.register_buffer("mask", mask)
+            
+    def forward(self, x, freqs_cos, freq_sin):
+      bsz, seqlen, _ = x.shape
+      xq, xk, xv = self.wq(x), self.wk(x), self.wv(x)
+      # 调整形状以适应头的维度
+      xq = xq.view(bsz, seqlen, self.n_local_heads, self.head_dim)
+      xk = xk.view(bsz, seqlen, self.n_local_heads, self.head_dim)
+      xv = xv.view(bsz, seqlen, self.n_local_heads, self.head_dim)
 
-# 构造调整张量形状的reshape_for_broadcast函数
-def reshape_for_broadcast(freqs_cis: torch.Tensor, x: torch.Tensor):
-	# 获取x的维度数
-	ndim = x.ndim
+      # 应用旋转嵌入 rope
+      xq, xk = apply_rotary_emb(xq, xk, freqs_cos, freq_sin)
 
-	# 构造一个新的形状，除了第二维和最后一维，其他是i
-	shape = [d if i == 1 or i == ndim - 1 else 1 for i, d in enumerate(x.shape)]
+      # 对键和值进行拓展
+      xk = repeat_kv(xk, self.n_rep)
+      xv = repeat_kv(xv, self.n_rep)
 
-	# 将freqs_cis调整为新的形状
-	return freqs_cis.view(shape)
+      # 将头作为批次维度处理
+      xq = xq.transpose(1,2);
+      xk = xk.transpose(1,2);
+      xv = xv.transpose(1,2);
 
-x = torch.randn(1, 50, 64)
-y = torch.randn(1, 100, 64, 24)
-reshape = reshape_for_broadcast(x, y)
-print(reshape)
+      # 根据是否支持Flash Attention，选择实现方式。
+      if self.flash:
+          output = torch.nn.functional.scaled_dot_product_attention(xq, xk, xv, attn_mask=None, dropout_p=self.dropout if self.training else 0.0, is_causal=True)
+      else:
+          scores = torch.matmul(xq, xk.transpose(2, 3)) / math.sqrt(self.head_dim)
+          assert hasattr(self, 'mask')
+          scores = scores + self.mask[:, :, :seqlen, :seqlen] # type: ignore
+          scores = F.softmax(scores.float(), dim=-1).type_as(xq)
+          scores = self.attn_dropout(scores)
+          output = torch.matmul(scores, xv)
+      
+      # 恢复时间维度并合并
+      output = output.transpose(1,2).contiguous().view(bsz, seqlen, -1)
+
+      # 最终投影回残差流
+      output = self.wo(output)
+      output = self.resid_dropout(output)
+      return output
