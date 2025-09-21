@@ -3,7 +3,7 @@ from torch import nn
 import torch.nn.functional as F
 from transformers import PretrainedConfig
 import math
-from embeding import apply_rotary_emb, repeat_kv
+from embeding import apply_rotary_emb, repeat_kv, precompute_freq_cis
 
 class ModelConfig(PretrainedConfig):
     model_type = "Tiny-K"
@@ -14,7 +14,7 @@ class ModelConfig(PretrainedConfig):
             n_heads: int = 16,
             n_kv_heads: int = 8,
             vocab_size: int = 6144,
-            hidden_dim: int = None,
+            hidden_dim: int = None, # type: ignore
             multiple_of: int = 64,
             norm_eps: float = 1e-5,
             max_seq_len: int = 512,
@@ -56,8 +56,8 @@ class Attention(nn.Module):
         
         # 定义投影的权重矩阵
         self.wq = nn.Linear(args.dim, args.n_heads * self.head_dim, bias=False)
-        self.wk = nn.Linear(args.dim, args.n_heads * self.head_dim, bias=False)
-        self.wv = nn.Linear(args.dim, args.n_heads * self.head_dim, bias=False)
+        self.wk = nn.Linear(args.dim, args.n_kv_heads * self.head_dim, bias=False)
+        self.wv = nn.Linear(args.dim, args.n_kv_heads * self.head_dim, bias=False)
         # 输出权重
         self.wo = nn.Linear(args.n_heads * self.head_dim, args.dim, bias=False)
         
@@ -81,8 +81,8 @@ class Attention(nn.Module):
       xq, xk, xv = self.wq(x), self.wk(x), self.wv(x)
       # 调整形状以适应头的维度
       xq = xq.view(bsz, seqlen, self.n_local_heads, self.head_dim)
-      xk = xk.view(bsz, seqlen, self.n_local_heads, self.head_dim)
-      xv = xv.view(bsz, seqlen, self.n_local_heads, self.head_dim)
+      xk = xk.view(bsz, seqlen, self.n_local_kv_heads, self.head_dim)
+      xv = xv.view(bsz, seqlen, self.n_local_kv_heads, self.head_dim)
 
       # 应用旋转嵌入 rope
       xq, xk = apply_rotary_emb(xq, xk, freqs_cos, freq_sin)
@@ -114,3 +114,23 @@ class Attention(nn.Module):
       output = self.wo(output)
       output = self.resid_dropout(output)
       return output
+
+# args = ModelConfig()
+# # 创建Attention实例
+# attention_model = Attention(args)
+
+# # 模拟输入数据
+# batch_size = 1
+# seq_len = 50  # 假设实际使用的序列长度为50
+# dim = args.dim
+# x = torch.rand(batch_size, seq_len, dim)  # 随机生成输入张量
+# # freqs_cos = torch.rand(seq_len, dim // 2)  # 模拟cos频率，用于RoPE
+# # freqs_sin = torch.rand(seq_len, dim // 2)  # 模拟sin频率，用于RoPE
+
+# freqs_cos, freqs_sin = precompute_freq_cis(dim//args.n_heads, seq_len)
+
+# # 运行Attention模型
+# output = attention_model(x, freqs_cos, freqs_sin)
+
+# # attention出来之后的形状 依然是[batch_size, seq_len, dim]
+# print("Output shape:", output.shape)

@@ -1,5 +1,4 @@
 import torch
-from torch import nn
 import torch.nn.functional as F
 
 def repeat_kv(x: torch.Tensor, n_rep: int):
@@ -53,7 +52,6 @@ def apply_rotary_emb(
     # 将查询和键张量转换为浮点数，并重塑形状以分离实部和虚部
     xq_r, xq_i = xq.float().reshape(xq.shape[:-1] + (-1, 2)).unbind(-1)
     xk_r, xk_i = xk.float().reshape(xk.shape[:-1] + (-1, 2)).unbind(-1)
-    print('xq_r', xq_r.shape, 'freqs_cos', freqs_cos.shape, 'freqs_sin', freqs_sin.shape)
     # 重新塑形频率张量以进行广播
     freqs_cos = reshape_for_broadcast(freqs_cos, xq_r)
     freqs_sin = reshape_for_broadcast(freqs_sin, xq_r)
@@ -76,7 +74,7 @@ def apply_rotary_emb(
 xq = torch.randn(1, 50, 6, 48)
 xk = torch.randn(1, 50, 6, 48)
 cos, sin = precompute_freq_cis(288 //6, 50)
-print(cos.shape, sin.shape)
-xq_out, xk_out = apply_rotary_emb(xq, xk, cos, sin)
-print(xq_out, xk_out)
+# print(cos.shape, sin.shape)
+# xq_out, xk_out = apply_rotary_emb(xq, xk, cos, sin)
+# print(xq_out, xk_out)
 

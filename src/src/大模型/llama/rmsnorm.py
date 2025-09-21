@@ -18,6 +18,6 @@ class RMSNorm(torch.nn.Module):
     
 norm = RMSNorm(64, 10.222);
 input = torch.randn(1, 50, 64);
-output = norm(input)
-print(output);
-print(output.shape)
+# output = norm(input)
+# print(output);
+# print(output.shape)
